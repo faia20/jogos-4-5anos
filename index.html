@@ -372,6 +372,248 @@
   }
   .big-num-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #ad1457; }
 
+  /* Labirinto */
+  .maze-info {
+    text-align: center;
+    background: #5d4037;
+    color: white;
+    padding: 12px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .maze-canvas-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .maze-canvas {
+    background: #fff8e1;
+    border-radius: 20px;
+    padding: 10px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.1);
+    touch-action: none;
+  }
+  .maze-canvas svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 600px;
+    touch-action: none;
+  }
+  .maze-canvas svg .wall { fill: #6d4c41; }
+  .maze-canvas svg .path { fill: #fff8e1; }
+  .maze-canvas svg .player {
+    transition: cx 0.05s linear, cy 0.05s linear;
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
+  }
+  .maze-canvas svg .goal-pulse {
+    animation: goalPulse 1s ease-in-out infinite;
+  }
+  @keyframes goalPulse {
+    0%,100% { transform: scale(1); }
+    50% { transform: scale(1.15); }
+  }
+  .maze-trail {
+    fill: rgba(255, 193, 7, 0.4);
+  }
+
+  /* Ligar */
+  .match-area {
+    background: #eceff1;
+    border-radius: 20px;
+    padding: 15px;
+    margin-bottom: 15px;
+    position: relative;
+  }
+  .match-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    gap: 15px;
+    position: relative;
+  }
+  .match-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
+  }
+  .match-item {
+    background: white;
+    border: 4px solid #cfd8dc;
+    border-radius: 15px;
+    padding: 14px 8px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 1.5em;
+    font-weight: bold;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+    position: relative;
+    user-select: none;
+  }
+  .match-item:active { transform: scale(0.97); }
+  .match-item.selected {
+    border-color: #ff9800;
+    background: #fff3e0;
+    transform: scale(1.03);
+    box-shadow: 0 4px 12px rgba(255,152,0,0.3);
+  }
+  .match-item.matched {
+    border-color: #4caf50;
+    background: #e8f5e9;
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .match-item.wrong-flash {
+    animation: shake 0.4s;
+    border-color: #f44336;
+  }
+  .match-item.matched::after {
+    content: '✓';
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #4caf50;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    line-height: 26px;
+    font-size: 0.9em;
+  }
+  .match-svg-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+  .match-category-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    max-width: 600px;
+    margin: 15px auto;
+  }
+  .match-cat-btn {
+    padding: 18px 12px;
+    border: none;
+    border-radius: 18px;
+    color: white;
+    font-size: 1.05em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 0 rgba(0,0,0,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 60px;
+  }
+  .match-cat-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 rgba(0,0,0,0.25); }
+  .match-cat-btn .cat-emoji { font-size: 1.6em; }
+
+  /* Desenhar letras */
+  .trace-letter-picker {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 8px;
+    max-width: 600px;
+    margin: 0 auto 15px;
+  }
+  .trace-letter-btn {
+    background: white;
+    border: 3px solid #ff7043;
+    color: #ff5722;
+    border-radius: 12px;
+    padding: 10px;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 3px 0 #d84315;
+  }
+  .trace-letter-btn:active { transform: translateY(2px); box-shadow: 0 1px 0 #d84315; }
+  .trace-letter-btn.done {
+    background: #4caf50;
+    color: white;
+    border-color: #2e7d32;
+    box-shadow: 0 3px 0 #1b5e20;
+  }
+  .trace-canvas-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+  }
+  .trace-canvas {
+    background: #fffde7;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.05);
+    touch-action: none;
+  }
+  .trace-canvas svg {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    touch-action: none;
+  }
+  .trace-canvas svg .guide-line {
+    fill: none;
+    stroke: #ffccbc;
+    stroke-width: 28;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .trace-canvas svg .guide-arrow {
+    fill: #ff5722;
+    animation: arrowPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes arrowPulse {
+    0%,100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+  .trace-canvas svg .user-stroke {
+    fill: none;
+    stroke: #ff5722;
+    stroke-width: 14;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .trace-canvas svg .start-dot {
+    fill: #4caf50;
+    animation: startPulse 1s ease-in-out infinite;
+  }
+  @keyframes startPulse {
+    0%,100% { r: 12; }
+    50% { r: 16; }
+  }
+  .trace-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .trace-btn {
+    padding: 12px 22px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.05em;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+  }
+  .trace-btn.clear-btn { background: #757575; box-shadow: 0 4px 0 #424242; }
+  .trace-btn.clear-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #424242; }
+  .trace-btn.next-trace-btn { background: #ff5722; box-shadow: 0 4px 0 #d84315; }
+  .trace-btn.next-trace-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #d84315; }
+
   /* Vestir Panda */
   .panda-instruction {
     text-align: center;
@@ -419,38 +661,51 @@
   .panda-svg .clothing-item svg { width: 100%; height: 100%; }
   .clothing-choices {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(115px, 1fr));
     gap: 12px;
-    max-width: 500px;
+    max-width: 560px;
     margin: 0 auto;
   }
   .clothing-card {
     background: white;
     border: 4px solid #eee;
     border-radius: 18px;
-    padding: 12px 8px;
+    padding: 10px 8px;
     cursor: pointer;
     transition: all 0.15s;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    min-height: 100px;
+    min-height: 130px;
   }
   .clothing-card:hover { border-color: #ffd54f; transform: translateY(-3px); }
   .clothing-card:active { transform: scale(0.95); }
   .clothing-card.correct-flash { background: #c8e6c9; border-color: #4caf50; animation: pop 0.5s; }
   .clothing-card.wrong-flash { background: #ffcdd2; border-color: #f44336; animation: shake 0.5s; }
-  .clothing-card svg {
-    width: 55px;
-    height: 55px;
+  .clothing-preview {
+    width: 90px;
+    height: 90px;
+    background: #fafafa;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 4px;
+  }
+  .clothing-preview svg {
+    width: 100%;
+    height: 100%;
     display: block;
   }
   .clothing-card .pt-label {
-    font-size: 0.8em;
-    color: #888;
+    font-size: 0.85em;
+    color: #555;
     font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
   }
   .panda-progress {
     text-align: center;
@@ -877,6 +1132,9 @@ function startGame(game, ev) {
   if (game === 'paint') renderPaintGame();
   if (game === 'english') renderEnglishGame();
   if (game === 'panda') renderPandaGame();
+  if (game === 'maze') renderMazeGame();
+  if (game === 'match') renderMatchGame();
+  if (game === 'trace') renderTraceGame();
 }
 
 // ========== NOME ==========
@@ -1750,6 +2008,33 @@ const PANDA_COLORS = {
   orange: { hex: '#fb8c00', pt: 'laranja' }
 };
 
+// ViewBoxes optimizadas para cada peça preencher bem o quadrado de preview
+// (recortam a zona onde a peça realmente está no SVG do panda)
+const CLOTHING_PREVIEW_VIEWBOX = {
+  tshirt:    '40 110 140 105',
+  dress:     '35 110 150 145',
+  skirt:     '45 170 130 75',
+  pants:     '65 170 90 80',
+  coat:      '40 110 140 110',
+  sweater:   '40 95 140 135',
+  shorts:    '65 170 90 55',
+  hat:       '60 5 100 65',
+  crown:     '65 15 90 45',
+  bow:       '65 35 90 35',
+  cap:       '65 25 100 50',
+  headband:  '60 40 100 40',
+  glasses:   '70 70 80 45',
+  sunglasses:'70 70 80 40',
+  shoes:     '55 235 110 30',
+  boots:     '55 220 110 45',
+  sandals:   '55 240 110 25',
+  socks:     '70 210 80 50',
+  bag:       '145 140 60 70',
+  scarf:     '60 115 100 70',
+  necklace:  '70 120 80 45',
+  belt:      '55 188 110 30'
+};
+
 // Cada peça é uma função que retorna SVG dado uma cor
 const CLOTHING_SVG = {
   // Roupa do corpo
@@ -1778,7 +2063,7 @@ const CLOTHING_SVG = {
   cap: (c) => `<svg viewBox="0 0 220 280"><path d="M 75 60 Q 110 30 145 60 L 145 65 L 75 65 Z" fill="${c}" stroke="#333" stroke-width="2"/><ellipse cx="140" cy="68" rx="22" ry="5" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
   headband: (c) => `<svg viewBox="0 0 220 280"><path d="M 70 60 Q 110 45 150 60 L 148 70 Q 110 58 72 70 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
   shorts: (c) => `<svg viewBox="0 0 220 280"><path d="M 78 175 L 142 175 L 145 215 L 120 215 L 115 195 L 110 195 L 105 195 L 100 215 L 75 215 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
-  sweater: (c) => `<svg viewBox="0 0 220 280"><path d="M 60 130 L 80 118 Q 110 128 140 118 L 160 130 L 170 160 L 158 165 L 152 155 L 152 215 L 68 215 L 68 155 L 62 165 L 50 160 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`
+  sweater: (c) => `<svg viewBox="0 0 220 280"><path d="M 50 128 Q 50 115 65 113 L 85 118 Q 110 128 135 118 L 155 113 Q 170 115 170 128 L 178 210 Q 178 220 168 220 L 158 220 L 152 145 L 152 220 L 68 220 L 68 145 L 62 220 L 52 220 Q 42 220 42 210 Z" fill="${c}" stroke="#333" stroke-width="2.5"/><path d="M 78 113 Q 110 122 142 113 Q 142 105 110 100 Q 78 105 78 113 Z" fill="${c}" stroke="#333" stroke-width="2.5"/><line x1="68" y1="155" x2="152" y2="155" stroke="#333" stroke-width="1.5" stroke-dasharray="3,2"/></svg>`
 };
 
 const PANDA_BASE = `
@@ -2024,12 +2309,11 @@ function nextPandaRound(isStartOfLevel) {
       ${choices.map((c, idx) => {
         const svgFn = CLOTHING_SVG[c.item.svgKey];
         const colorHex = c.item.useColor ? PANDA_COLORS[c.colorKey].hex : '#666';
-        const svg = svgFn ? svgFn(colorHex) : '';
-        // Para mostrar mini-preview da peça, mostramos apenas o SVG sem fundo do panda
+        const previewViewBox = CLOTHING_PREVIEW_VIEWBOX[c.item.svgKey] || '0 0 220 280';
         return `
           <div class="clothing-card" id="panda-card-${idx}" onclick="checkPandaChoice('${c.item.svgKey}','${c.colorKey}',${idx})">
-            <div style="width:55px;height:55px;background:#f5f5f5;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden">
-              <svg viewBox="40 20 140 240" style="width:60px;height:60px">${getMiniPreview(c.item.svgKey, colorHex)}</svg>
+            <div class="clothing-preview">
+              <svg viewBox="${previewViewBox}" preserveAspectRatio="xMidYMid meet">${getMiniPreview(c.item.svgKey, colorHex)}</svg>
             </div>
             <div class="pt-label">${c.item.useColor ? PANDA_COLORS[c.colorKey].pt + ' ' + c.item.pt : c.item.pt}</div>
           </div>
@@ -2119,6 +2403,878 @@ function showPandaCompletion() {
   sounds.win();
   speak('Wow! Look at the panda! Well done!', 'en-US', false);
 }
+
+// ========== LABIRINTO ==========
+// Labirintos como grelhas: 1 = parede, 0 = caminho, 2 = início, 3 = fim
+// Desenhados com várias bifurcações e becos sem saída para serem desafiantes
+const MAZES = [
+  {
+    // Labirinto do rato — 13x13 com vários becos
+    grid: [
+      "1111111111111",
+      "1200010000001",
+      "1011010111101",
+      "1010010001101",
+      "1010111101101",
+      "1010001001101",
+      "1011101011001",
+      "1000100010101",
+      "1110111110101",
+      "1000000010101",
+      "1011111110131",
+      "1000000000001",
+      "1111111111111"
+    ],
+    theme: { player: '🐭', goal: '🧀', playerName: 'rato' }
+  },
+  {
+    // Labirinto da abelha — 13x13
+    grid: [
+      "1111111111111",
+      "1200000100031",
+      "1011110101101",
+      "1010000001101",
+      "1010111110101",
+      "1010100000101",
+      "1010101111101",
+      "1010101000001",
+      "1010001011111",
+      "1011111010001",
+      "1000000010101",
+      "1011111110101",
+      "1111111111111"
+    ],
+    theme: { player: '🐝', goal: '🌻', playerName: 'abelha' }
+  },
+  {
+    // Labirinto da tartaruga — 15x13, maior e mais difícil
+    grid: [
+      "111111111111111",
+      "120010001000001",
+      "101011101011101",
+      "100000100010101",
+      "111110101110101",
+      "100000100000101",
+      "101111101101101",
+      "100001000101001",
+      "111101110101111",
+      "100000100000031",
+      "101111111111101",
+      "100000000000001",
+      "111111111111111"
+    ],
+    theme: { player: '🐢', goal: '🌊', playerName: 'tartaruga' }
+  },
+  {
+    // Labirinto do coelho — caminho que parece óbvio mas não é
+    grid: [
+      "1111111111111",
+      "1200000111031",
+      "1110110100101",
+      "1010010100101",
+      "1010111100101",
+      "1010001000101",
+      "1011101011101",
+      "1000101010001",
+      "1110101010111",
+      "1000001010001",
+      "1011111011101",
+      "1000000000001",
+      "1111111111111"
+    ],
+    theme: { player: '🐰', goal: '🥕', playerName: 'coelho' }
+  },
+  {
+    // Labirinto do pinguim — em espiral
+    grid: [
+      "111111111111111",
+      "120000000000001",
+      "101111111111101",
+      "101000000000101",
+      "101011111110101",
+      "101010000010101",
+      "101010130010101",
+      "101010111110101",
+      "101010000000101",
+      "101011111111101",
+      "101000000000001",
+      "101111111111111",
+      "100000000000001",
+      "111111111111111"
+    ],
+    theme: { player: '🐧', goal: '🐟', playerName: 'pinguim' }
+  },
+  {
+    // Labirinto do fantasma — grande e com muitos cruzamentos
+    grid: [
+      "111111111111111",
+      "120000000000001",
+      "101111011111101",
+      "100000010000001",
+      "111110111110111",
+      "100010100000001",
+      "101010111110101",
+      "101010000010101",
+      "101011110010101",
+      "101000010010101",
+      "111110010111101",
+      "100000010000001",
+      "101111111110111",
+      "100000000000031",
+      "111111111111111"
+    ],
+    theme: { player: '👻', goal: '🎃', playerName: 'fantasma' }
+  }
+];
+
+let mazeState = null;
+let mazeDragging = false;
+
+function renderMazeGame() {
+  const m = MAZES[Math.floor(Math.random() * MAZES.length)];
+  startMaze(m);
+}
+
+function startMaze(maze) {
+  // Encontrar start e goal
+  let start = null, goal = null;
+  for (let y = 0; y < maze.grid.length; y++) {
+    for (let x = 0; x < maze.grid[y].length; x++) {
+      const c = maze.grid[y][x];
+      if (c === '2') start = { x, y };
+      if (c === '3') goal = { x, y };
+    }
+  }
+
+  if (!start || !goal) return;
+
+  const cellSize = 40;
+  const cols = maze.grid[0].length;
+  const rows = maze.grid.length;
+  const width = cols * cellSize;
+  const height = rows * cellSize;
+
+  mazeState = {
+    maze,
+    cellSize,
+    cols, rows, width, height,
+    player: { ...start },
+    goal,
+    trail: [`${start.x},${start.y}`],
+    won: false
+  };
+
+  // Construir SVG do labirinto
+  let svgCells = '';
+  for (let y = 0; y < rows; y++) {
+    for (let x = 0; x < cols; x++) {
+      const c = maze.grid[y][x];
+      const isWall = c === '1';
+      svgCells += `<rect x="${x*cellSize}" y="${y*cellSize}" width="${cellSize}" height="${cellSize}" class="${isWall ? 'wall' : 'path'}"/>`;
+    }
+  }
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#5d4037">🐭 Labirinto</h2>
+    <div class="maze-info">Ajuda o ${maze.theme.player} a chegar ao ${maze.theme.goal}! Arrasta o dedo!</div>
+    <div class="maze-canvas-wrap">
+      <div class="maze-canvas">
+        <svg id="mazeSvg" viewBox="0 0 ${width} ${height}" preserveAspectRatio="xMidYMid meet">
+          ${svgCells}
+          <g id="trail"></g>
+          <text x="${goal.x*cellSize + cellSize/2}" y="${goal.y*cellSize + cellSize*0.78}"
+                text-anchor="middle" font-size="${cellSize*0.85}" class="goal-pulse">${maze.theme.goal}</text>
+          <text id="playerEl" x="${start.x*cellSize + cellSize/2}" y="${start.y*cellSize + cellSize*0.78}"
+                text-anchor="middle" font-size="${cellSize*0.85}" class="player">${maze.theme.player}</text>
+        </svg>
+      </div>
+    </div>
+    <div style="text-align:center">
+      <button class="trace-btn clear-btn" onclick="renderMazeGame()">🔄 Outro labirinto</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  speak(`Ajuda o ${maze.theme.playerName} a chegar! Arrasta o dedo pelo caminho!`);
+
+  setupMazeControls();
+}
+
+function setupMazeControls() {
+  const svg = document.getElementById('mazeSvg');
+  if (!svg) return;
+
+  const getCellFromEvent = (e) => {
+    const rect = svg.getBoundingClientRect();
+    const point = e.touches ? e.touches[0] : e;
+    const x = point.clientX - rect.left;
+    const y = point.clientY - rect.top;
+    // Converter para coords SVG
+    const svgX = (x / rect.width) * mazeState.width;
+    const svgY = (y / rect.height) * mazeState.height;
+    const col = Math.floor(svgX / mazeState.cellSize);
+    const row = Math.floor(svgY / mazeState.cellSize);
+    return { x: col, y: row };
+  };
+
+  const tryMoveTo = (cell) => {
+    if (mazeState.won) return;
+    if (cell.x < 0 || cell.y < 0 || cell.x >= mazeState.cols || cell.y >= mazeState.rows) return;
+
+    const cellChar = mazeState.maze.grid[cell.y][cell.x];
+    if (cellChar === '1') return; // parede
+
+    // Tem de ser adjacente à posição atual (4-direccional) OU continuação da trilha
+    const cur = mazeState.player;
+    const dx = Math.abs(cell.x - cur.x);
+    const dy = Math.abs(cell.y - cur.y);
+    if (dx + dy !== 1) {
+      // Verificar se está na trilha (para permitir voltar atrás)
+      const key = `${cell.x},${cell.y}`;
+      if (!mazeState.trail.includes(key)) return;
+    }
+
+    // Mover
+    mazeState.player = cell;
+    const key = `${cell.x},${cell.y}`;
+    if (!mazeState.trail.includes(key)) {
+      mazeState.trail.push(key);
+    } else {
+      // Cortar trilha quando volta atrás
+      const idx = mazeState.trail.indexOf(key);
+      mazeState.trail = mazeState.trail.slice(0, idx + 1);
+    }
+    updateMazeView();
+
+    // Verificar vitória
+    if (cell.x === mazeState.goal.x && cell.y === mazeState.goal.y) {
+      mazeState.won = true;
+      sounds.win();
+      updateScore(5);
+      const fb = document.getElementById('feedback');
+      fb.innerHTML = `<span class="celebrate">🎉 Conseguiste! 🎉</span>`;
+      speak('Boa Matilde! Conseguiste!', 'pt-PT', false);
+      setTimeout(renderMazeGame, 2500);
+    } else {
+      playTone(440 + Math.random() * 200, 0.05);
+    }
+  };
+
+  const handleStart = (e) => {
+    e.preventDefault();
+    const cell = getCellFromEvent(e);
+    // Só inicia drag se tocar no jogador ou numa célula adjacente
+    if (cell.x === mazeState.player.x && cell.y === mazeState.player.y) {
+      mazeDragging = true;
+    } else {
+      const dx = Math.abs(cell.x - mazeState.player.x);
+      const dy = Math.abs(cell.y - mazeState.player.y);
+      if (dx + dy === 1) {
+        mazeDragging = true;
+        tryMoveTo(cell);
+      }
+    }
+  };
+
+  const handleMove = (e) => {
+    if (!mazeDragging) return;
+    e.preventDefault();
+    const cell = getCellFromEvent(e);
+    if (cell.x !== mazeState.player.x || cell.y !== mazeState.player.y) {
+      tryMoveTo(cell);
+    }
+  };
+
+  const handleEnd = (e) => {
+    mazeDragging = false;
+  };
+
+  svg.addEventListener('touchstart', handleStart, { passive: false });
+  svg.addEventListener('touchmove', handleMove, { passive: false });
+  svg.addEventListener('touchend', handleEnd);
+  svg.addEventListener('mousedown', handleStart);
+  svg.addEventListener('mousemove', handleMove);
+  svg.addEventListener('mouseup', handleEnd);
+  svg.addEventListener('mouseleave', handleEnd);
+}
+
+function updateMazeView() {
+  const trailEl = document.getElementById('trail');
+  const cs = mazeState.cellSize;
+  if (trailEl) {
+    trailEl.innerHTML = mazeState.trail.map(key => {
+      const [x, y] = key.split(',').map(Number);
+      return `<circle cx="${x*cs + cs/2}" cy="${y*cs + cs/2}" r="${cs*0.18}" class="maze-trail"/>`;
+    }).join('');
+  }
+  const playerEl = document.getElementById('playerEl');
+  if (playerEl) {
+    playerEl.setAttribute('x', mazeState.player.x * cs + cs/2);
+    playerEl.setAttribute('y', mazeState.player.y * cs + cs*0.78);
+  }
+}
+
+// ========== LIGAR ==========
+const MATCH_CATEGORIES = [
+  {
+    id: 'numbers',
+    title: 'Números e Quantidades',
+    color: '#4caf50',
+    emoji: '🔢',
+    intro: 'Liga cada número à quantidade certa!',
+    speakItem: (item) => `${item.left}`,
+    pairs: () => {
+      const all = [
+        { left: '1', right: '⭐', sayLeft: 'um' },
+        { left: '2', right: '⭐⭐', sayLeft: 'dois' },
+        { left: '3', right: '⭐⭐⭐', sayLeft: 'três' },
+        { left: '4', right: '🍎🍎🍎🍎', sayLeft: 'quatro' },
+        { left: '5', right: '🌸🌸🌸🌸🌸', sayLeft: 'cinco' },
+        { left: '6', right: '🐝🐝🐝🐝🐝🐝', sayLeft: 'seis' },
+        { left: '7', right: '🎈🎈🎈🎈🎈🎈🎈', sayLeft: 'sete' },
+        { left: '8', right: '🦋'.repeat(8), sayLeft: 'oito' }
+      ];
+      return shuffleArr(all).slice(0, 4);
+    }
+  },
+  {
+    id: 'size',
+    title: 'Maior e Mais Pequeno',
+    color: '#ff9800',
+    emoji: '📏',
+    intro: 'Liga cada grande ao seu mais pequeno!',
+    speakItem: (item) => item.sayLeft || '',
+    pairs: () => {
+      const emojis = ['🐘','🐭','🌳','🌱','🐳','🐟','🦒','🐢','🏔️','⛰️','🚂','🚗'];
+      // Pares de mesma "espécie" em tamanhos diferentes
+      const all = [
+        { left: '🐘', right: '🐭', sayLeft: 'elefante', sayRight: 'rato' },
+        { left: '🌳', right: '🌱', sayLeft: 'árvore', sayRight: 'planta' },
+        { left: '🐳', right: '🐟', sayLeft: 'baleia', sayRight: 'peixinho' },
+        { left: '🦒', right: '🐢', sayLeft: 'girafa', sayRight: 'tartaruga' },
+        { left: '🚂', right: '🚗', sayLeft: 'comboio', sayRight: 'carro' },
+        { left: '🐻', right: '🐰', sayLeft: 'urso', sayRight: 'coelho' }
+      ];
+      return shuffleArr(all).slice(0, 4);
+    }
+  },
+  {
+    id: 'math',
+    title: 'Contas',
+    color: '#9c27b0',
+    emoji: '➕',
+    intro: 'Liga cada conta ao resultado certo!',
+    speakItem: (item) => item.sayLeft,
+    pairs: () => {
+      const ops = [];
+      const used = new Set();
+      while (ops.length < 4) {
+        const a = 1 + Math.floor(Math.random() * 5);
+        const b = 1 + Math.floor(Math.random() * 5);
+        const r = a + b;
+        if (r > 10) continue;
+        if (used.has(r)) continue;
+        used.add(r);
+        ops.push({
+          left: `${a} + ${b}`,
+          right: `${r}`,
+          sayLeft: `${a} mais ${b}`,
+          sayRight: `${r}`
+        });
+      }
+      return ops;
+    }
+  },
+  {
+    id: 'shapes',
+    title: 'Formas',
+    color: '#ff5722',
+    emoji: '⭐',
+    intro: 'Liga cada forma ao objeto certo!',
+    speakItem: (item) => item.sayLeft,
+    pairs: () => {
+      const all = [
+        { left: '⭕', right: '⚽', sayLeft: 'círculo', sayRight: 'bola' },
+        { left: '🔺', right: '🍕', sayLeft: 'triângulo', sayRight: 'fatia de pizza' },
+        { left: '🟦', right: '📺', sayLeft: 'quadrado', sayRight: 'televisão' },
+        { left: '❤️', right: '💖', sayLeft: 'coração', sayRight: 'coração' },
+        { left: '⭐', right: '🌟', sayLeft: 'estrela', sayRight: 'estrela brilhante' },
+        { left: '🔶', right: '💎', sayLeft: 'losango', sayRight: 'diamante' }
+      ];
+      return shuffleArr(all).slice(0, 4);
+    }
+  },
+  {
+    id: 'english',
+    title: 'Inglês',
+    color: '#f44336',
+    emoji: '🇬🇧',
+    intro: 'Liga cada palavra inglesa à imagem!',
+    speakItem: (item) => item.sayLeft,
+    speakItemLang: 'en-US',
+    pairs: () => {
+      const all = [
+        { left: 'cat', right: '🐱', sayLeft: 'cat' },
+        { left: 'dog', right: '🐶', sayLeft: 'dog' },
+        { left: 'sun', right: '☀️', sayLeft: 'sun' },
+        { left: 'star', right: '⭐', sayLeft: 'star' },
+        { left: 'fish', right: '🐟', sayLeft: 'fish' },
+        { left: 'apple', right: '🍎', sayLeft: 'apple' },
+        { left: 'house', right: '🏠', sayLeft: 'house' },
+        { left: 'car', right: '🚗', sayLeft: 'car' },
+        { left: 'moon', right: '🌙', sayLeft: 'moon' },
+        { left: 'flower', right: '🌸', sayLeft: 'flower' }
+      ];
+      return shuffleArr(all).slice(0, 4);
+    }
+  },
+  {
+    id: 'baby',
+    title: 'Mães e Bebés',
+    color: '#ec407a',
+    emoji: '🐣',
+    intro: 'Liga cada mãe ao bebé certo!',
+    speakItem: (item) => item.sayLeft,
+    pairs: () => {
+      const all = [
+        { left: '🐔', right: '🐤', sayLeft: 'galinha', sayRight: 'pintainho' },
+        { left: '🐶', right: '🐕', sayLeft: 'cão' },
+        { left: '🐱', right: '🐈', sayLeft: 'gato' },
+        { left: '🐮', right: '🐄', sayLeft: 'vaca' },
+        { left: '🐑', right: '🐏', sayLeft: 'ovelha' },
+        { left: '🦋', right: '🐛', sayLeft: 'borboleta', sayRight: 'lagarta' },
+        { left: '🐸', right: '🐝', sayLeft: 'rã' }
+      ];
+      // Versão simplificada: vamos usar combinações específicas
+      const pairs = [
+        { left: '🐔', right: '🐣', sayLeft: 'galinha' },
+        { left: '🐴', right: '🐎', sayLeft: 'cavalo' },
+        { left: '🐱', right: '🐈‍⬛', sayLeft: 'gato' },
+        { left: '🦆', right: '🐥', sayLeft: 'pato' },
+        { left: '🐻', right: '🧸', sayLeft: 'urso' },
+        { left: '🐸', right: '🐛', sayLeft: 'rã' }
+      ];
+      return shuffleArr(pairs).slice(0, 4);
+    }
+  },
+  {
+    id: 'opposites',
+    title: 'Opostos',
+    color: '#673ab7',
+    emoji: '☀️',
+    intro: 'Liga cada coisa ao seu oposto!',
+    speakItem: (item) => item.sayLeft,
+    pairs: () => {
+      const all = [
+        { left: '☀️', right: '🌙', sayLeft: 'sol', sayRight: 'lua' },
+        { left: '🔥', right: '❄️', sayLeft: 'fogo', sayRight: 'gelo' },
+        { left: '😀', right: '😢', sayLeft: 'feliz', sayRight: 'triste' },
+        { left: '🐌', right: '🐆', sayLeft: 'devagar', sayRight: 'depressa' },
+        { left: '⬆️', right: '⬇️', sayLeft: 'em cima', sayRight: 'em baixo' },
+        { left: '☔', right: '🏜️', sayLeft: 'molhado', sayRight: 'seco' }
+      ];
+      return shuffleArr(all).slice(0, 4);
+    }
+  }
+];
+
+function shuffleArr(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+let matchState = null;
+
+function renderMatchGame() {
+  // Mostrar seletor de categoria
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#455a64">🔗 Jogo de Ligar</h2>
+    <p class="instruction">Escolhe o tipo de jogo!</p>
+    <div class="match-category-picker">
+      ${MATCH_CATEGORIES.map(c => `
+        <button class="match-cat-btn" style="background:${c.color}" onclick="startMatchCategory('${c.id}')">
+          <span class="cat-emoji">${c.emoji}</span>
+          <span>${c.title}</span>
+        </button>
+      `).join('')}
+    </div>
+  `;
+  setTimeout(() => speak('Escolhe um jogo de ligar!'), 300);
+}
+
+function startMatchCategory(catId) {
+  const cat = MATCH_CATEGORIES.find(c => c.id === catId);
+  if (!cat) return;
+
+  const pairs = cat.pairs();
+  // Lado esquerdo: ordem original. Lado direito: baralhado.
+  const lefts = pairs.map((p, i) => ({ ...p, index: i }));
+  const rights = shuffleArr(pairs.map((p, i) => ({ ...p, index: i })));
+
+  matchState = {
+    cat, pairs,
+    lefts, rights,
+    selectedLeft: null,
+    selectedRight: null,
+    matched: new Set()
+  };
+
+  renderMatchBoard();
+}
+
+function renderMatchBoard() {
+  const cat = matchState.cat;
+  const speakLang = cat.speakItemLang || 'pt-PT';
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:${cat.color}">${cat.emoji} ${cat.title}</h2>
+    <div class="match-area">
+      <p class="instruction" style="margin-bottom:15px">${cat.intro}</p>
+      <div class="match-row">
+        <div class="match-column">
+          ${matchState.lefts.map(item => `
+            <div class="match-item ${matchState.matched.has(item.index) ? 'matched' : ''} ${matchState.selectedLeft === item.index ? 'selected' : ''}"
+                 onclick="pickMatchLeft(${item.index})"
+                 id="left-${item.index}">${item.left}</div>
+          `).join('')}
+        </div>
+        <div class="match-column">
+          ${matchState.rights.map(item => `
+            <div class="match-item ${matchState.matched.has(item.index) ? 'matched' : ''} ${matchState.selectedRight === item.index ? 'selected' : ''}"
+                 onclick="pickMatchRight(${item.index})"
+                 id="right-${item.index}">${item.right}</div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div style="text-align:center;margin-top:10px">
+      <button class="trace-btn clear-btn" onclick="renderMatchGame()">📋 Outro jogo</button>
+    </div>
+  `;
+
+  // Falar instrução
+  setTimeout(() => speak(cat.intro), 200);
+}
+
+function pickMatchLeft(idx) {
+  if (matchState.matched.has(idx)) return;
+  matchState.selectedLeft = idx;
+
+  const item = matchState.pairs[idx];
+  const speakLang = matchState.cat.speakItemLang || 'pt-PT';
+  if (item.sayLeft) {
+    speak(item.sayLeft, speakLang, false);
+  }
+
+  // Se já tinha selecionado lado direito, tenta ligar
+  if (matchState.selectedRight !== null) {
+    tryConnectMatch();
+  } else {
+    renderMatchBoard();
+  }
+}
+
+function pickMatchRight(idx) {
+  if (matchState.matched.has(idx)) return;
+  matchState.selectedRight = idx;
+
+  // Se já tinha selecionado lado esquerdo, tenta ligar
+  if (matchState.selectedLeft !== null) {
+    tryConnectMatch();
+  } else {
+    renderMatchBoard();
+  }
+}
+
+function tryConnectMatch() {
+  const leftIdx = matchState.selectedLeft;
+  const rightIdx = matchState.selectedRight;
+
+  if (leftIdx === rightIdx) {
+    // Certo!
+    matchState.matched.add(leftIdx);
+    matchState.selectedLeft = null;
+    matchState.selectedRight = null;
+    sounds.win();
+    updateScore(3);
+    renderMatchBoard();
+
+    if (matchState.matched.size === matchState.pairs.length) {
+      // Acabou!
+      const fb = document.getElementById('feedback');
+      if (fb) fb.innerHTML = `<span class="celebrate">🎉 Conseguiste ligar tudo! 🎉</span>`;
+      speak('Boa Matilde! Conseguiste ligar tudo!');
+      setTimeout(() => startMatchCategory(matchState.cat.id), 2500);
+    }
+  } else {
+    // Errado
+    sounds.wrong();
+    const leftEl = document.getElementById(`left-${leftIdx}`);
+    const rightEl = document.getElementById(`right-${rightIdx}`);
+    if (leftEl) leftEl.classList.add('wrong-flash');
+    if (rightEl) rightEl.classList.add('wrong-flash');
+    setTimeout(() => {
+      matchState.selectedLeft = null;
+      matchState.selectedRight = null;
+      renderMatchBoard();
+    }, 700);
+  }
+}
+
+// ========== DESENHAR LETRAS ==========
+// Cada letra tem um path SVG guia que a criança deve seguir.
+// Vamos focar nas letras maiúsculas que são mais simples.
+const TRACE_LETTERS = {
+  M: {
+    say: 'eme',
+    guide: 'M 60 250 L 60 80 L 150 200 L 240 80 L 240 250',
+    startX: 60, startY: 250,
+    arrows: [{ x: 60, y: 80, rot: 0 }, { x: 150, y: 200, rot: 90 }, { x: 240, y: 80, rot: 270 }]
+  },
+  A: {
+    say: 'á',
+    guide: 'M 70 250 L 150 70 L 230 250 M 100 180 L 200 180',
+    startX: 70, startY: 250
+  },
+  T: {
+    say: 'tê',
+    guide: 'M 70 80 L 230 80 M 150 80 L 150 250',
+    startX: 70, startY: 80
+  },
+  I: {
+    say: 'i',
+    guide: 'M 100 80 L 200 80 M 150 80 L 150 250 M 100 250 L 200 250',
+    startX: 100, startY: 80
+  },
+  L: {
+    say: 'éle',
+    guide: 'M 90 80 L 90 250 L 230 250',
+    startX: 90, startY: 80
+  },
+  D: {
+    say: 'dê',
+    guide: 'M 80 80 L 80 250 L 160 250 Q 230 250 230 165 Q 230 80 160 80 L 80 80',
+    startX: 80, startY: 80
+  },
+  E: {
+    say: 'é',
+    guide: 'M 230 80 L 90 80 L 90 250 L 230 250 M 90 165 L 200 165',
+    startX: 230, startY: 80
+  },
+  O: {
+    say: 'ó',
+    guide: 'M 150 80 Q 230 80 230 165 Q 230 250 150 250 Q 70 250 70 165 Q 70 80 150 80',
+    startX: 150, startY: 80
+  },
+  C: {
+    say: 'cê',
+    guide: 'M 230 100 Q 70 50 70 165 Q 70 280 230 230',
+    startX: 230, startY: 100
+  },
+  S: {
+    say: 'ésse',
+    guide: 'M 220 110 Q 80 80 80 150 Q 80 200 220 200 Q 220 250 80 230',
+    startX: 220, startY: 110
+  },
+  P: {
+    say: 'pê',
+    guide: 'M 90 250 L 90 80 L 170 80 Q 230 80 230 130 Q 230 180 170 180 L 90 180',
+    startX: 90, startY: 250
+  },
+  B: {
+    say: 'bê',
+    guide: 'M 90 250 L 90 80 L 170 80 Q 220 80 220 125 Q 220 165 170 165 L 90 165 L 170 165 Q 230 165 230 210 Q 230 250 170 250 L 90 250',
+    startX: 90, startY: 250
+  },
+  R: {
+    say: 'érre',
+    guide: 'M 90 250 L 90 80 L 170 80 Q 230 80 230 130 Q 230 180 170 180 L 90 180 L 240 250',
+    startX: 90, startY: 250
+  },
+  N: {
+    say: 'ene',
+    guide: 'M 80 250 L 80 80 L 220 250 L 220 80',
+    startX: 80, startY: 250
+  },
+  V: {
+    say: 'vê',
+    guide: 'M 70 80 L 150 250 L 230 80',
+    startX: 70, startY: 80
+  },
+  U: {
+    say: 'u',
+    guide: 'M 80 80 L 80 200 Q 80 250 150 250 Q 220 250 220 200 L 220 80',
+    startX: 80, startY: 80
+  }
+};
+
+let traceState = null;
+
+function renderTraceGame() {
+  const letters = Object.keys(TRACE_LETTERS);
+  // Carregar letras já desenhadas dos memo
+  const done = JSON.parse(sessionStorage.getItem('trace_done') || '[]');
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#d84315">✍️ Desenha as Letras!</h2>
+    <p class="instruction">Escolhe uma letra para aprender a escrever!</p>
+    <div class="trace-letter-picker">
+      ${letters.map(l => `
+        <button class="trace-letter-btn ${done.includes(l) ? 'done' : ''}" onclick="startTraceLetter('${l}')">${l}</button>
+      `).join('')}
+    </div>
+  `;
+  setTimeout(() => speak('Escolhe uma letra para desenhar com o dedo!'), 300);
+}
+
+function startTraceLetter(letter) {
+  const def = TRACE_LETTERS[letter];
+  if (!def) return;
+
+  traceState = {
+    letter,
+    def,
+    drawing: false,
+    points: [], // pontos do utilizador
+    strokes: [] // lista de strokes (arrays de pontos)
+  };
+
+  drawTraceCanvas();
+  setTimeout(() => speak(`Desenha a letra ${def.say}. Começa no ponto verde!`), 300);
+}
+
+function drawTraceCanvas() {
+  const def = traceState.def;
+  const userPath = traceState.strokes.map(stroke => {
+    if (stroke.length === 0) return '';
+    return 'M ' + stroke.map(p => `${p.x} ${p.y}`).join(' L ');
+  }).join(' ');
+
+  // Adicionar stroke atual (em curso)
+  let currentPath = '';
+  if (traceState.points.length > 0) {
+    currentPath = 'M ' + traceState.points.map(p => `${p.x} ${p.y}`).join(' L ');
+  }
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#d84315">✍️ Letra ${traceState.letter}</h2>
+    <p class="instruction">Segue a linha cor-de-laranja com o dedo!</p>
+    <div class="trace-canvas-wrap">
+      <div class="trace-canvas">
+        <svg id="traceSvg" viewBox="0 0 300 320" preserveAspectRatio="xMidYMid meet">
+          <!-- Letra grande de fundo (transparente) -->
+          <text x="150" y="240" text-anchor="middle" font-size="280" font-family="Arial Black, Arial, sans-serif"
+                fill="#fff3e0" stroke="#ffe0b2" stroke-width="2" font-weight="900">${traceState.letter}</text>
+          <!-- Linha guia -->
+          <path d="${def.guide}" class="guide-line"/>
+          <!-- User strokes -->
+          <path d="${userPath} ${currentPath}" class="user-stroke"/>
+          <!-- Ponto inicial (verde) -->
+          <circle cx="${def.startX}" cy="${def.startY}" r="12" class="start-dot"/>
+        </svg>
+      </div>
+    </div>
+    <div class="trace-controls">
+      <button class="trace-btn clear-btn" onclick="clearTrace()">🧽 Apagar</button>
+      <button class="trace-btn next-trace-btn" onclick="finishTrace()">✓ Pronto!</button>
+      <button class="trace-btn clear-btn" onclick="renderTraceGame()">← Outras letras</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  setupTraceCanvas();
+}
+
+function setupTraceCanvas() {
+  const svg = document.getElementById('traceSvg');
+  if (!svg) return;
+
+  const getPoint = (e) => {
+    const rect = svg.getBoundingClientRect();
+    const p = e.touches ? e.touches[0] : e;
+    const x = ((p.clientX - rect.left) / rect.width) * 300;
+    const y = ((p.clientY - rect.top) / rect.height) * 320;
+    return { x, y };
+  };
+
+  const start = (e) => {
+    e.preventDefault();
+    traceState.drawing = true;
+    traceState.points = [getPoint(e)];
+    redrawTracePaths();
+  };
+
+  const move = (e) => {
+    if (!traceState.drawing) return;
+    e.preventDefault();
+    const p = getPoint(e);
+    traceState.points.push(p);
+    redrawTracePaths();
+  };
+
+  const end = (e) => {
+    if (!traceState.drawing) return;
+    traceState.drawing = false;
+    if (traceState.points.length > 1) {
+      traceState.strokes.push([...traceState.points]);
+    }
+    traceState.points = [];
+    redrawTracePaths();
+  };
+
+  svg.addEventListener('touchstart', start, { passive: false });
+  svg.addEventListener('touchmove', move, { passive: false });
+  svg.addEventListener('touchend', end);
+  svg.addEventListener('mousedown', start);
+  svg.addEventListener('mousemove', move);
+  svg.addEventListener('mouseup', end);
+  svg.addEventListener('mouseleave', end);
+}
+
+function redrawTracePaths() {
+  const svg = document.getElementById('traceSvg');
+  if (!svg) return;
+  const userStroke = svg.querySelector('.user-stroke');
+  if (!userStroke) return;
+
+  const allPaths = [
+    ...traceState.strokes.map(s => 'M ' + s.map(p => `${p.x} ${p.y}`).join(' L ')),
+    traceState.points.length > 0 ? 'M ' + traceState.points.map(p => `${p.x} ${p.y}`).join(' L ') : ''
+  ].filter(Boolean);
+
+  userStroke.setAttribute('d', allPaths.join(' '));
+}
+
+function clearTrace() {
+  traceState.strokes = [];
+  traceState.points = [];
+  drawTraceCanvas();
+}
+
+function finishTrace() {
+  // Critério simples: se desenhou pelo menos algumas pinceladas, dá positivo
+  const totalPoints = traceState.strokes.reduce((s, st) => s + st.length, 0);
+  if (totalPoints < 5) {
+    speak('Tens de desenhar a letra primeiro!');
+    return;
+  }
+
+  sounds.win();
+  updateScore(5);
+
+  const done = JSON.parse(sessionStorage.getItem('trace_done') || '[]');
+  if (!done.includes(traceState.letter)) {
+    done.push(traceState.letter);
+    sessionStorage.setItem('trace_done', JSON.stringify(done));
+  }
+
+  const fb = document.getElementById('feedback');
+  fb.innerHTML = `<span class="celebrate">🎉 Boa! Desenhaste a letra ${traceState.def.say}! 🎉</span>`;
+  speak(`Boa Matilde! Desenhaste a letra ${traceState.def.say}!`);
+
+  setTimeout(renderTraceGame, 2500);
+}
+
 </script>
 </body>
 </html>
