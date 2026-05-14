@@ -56,13 +56,19 @@
   .menu-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
   .menu-btn.active { transform: scale(1.05); }
   .btn-name { background: #ff4081; }
+  .btn-alphabet { background: #00897b; }
   .btn-count { background: #4caf50; }
+  .btn-bignum { background: #e91e63; }
   .btn-add { background: #9c27b0; }
   .btn-sub { background: #673ab7; }
   .btn-colors { background: #2196f3; }
   .btn-shapes { background: #ff9800; }
   .btn-paint { background: #00bcd4; }
   .btn-english { background: #f44336; }
+  .btn-panda { background: #424242; }
+  .btn-maze { background: #795548; }
+  .btn-match { background: #607d8b; }
+  .btn-trace { background: #ff5722; }
 
   .game-area {
     background: white; border-radius: 25px; padding: 30px 20px;
@@ -205,6 +211,265 @@
     50% { transform: translateX(-50%) translateY(-6px); }
   }
 
+  /* Balões (Alfabeto) */
+  .balloon-target {
+    text-align: center;
+    font-size: 1.4em;
+    padding: 12px;
+    background: #00897b;
+    color: white;
+    font-weight: bold;
+    margin-bottom: 12px;
+    border-radius: 15px;
+  }
+  .balloon-target .target-letter {
+    display: inline-block;
+    background: white;
+    color: #00897b;
+    width: 55px;
+    height: 55px;
+    line-height: 55px;
+    border-radius: 50%;
+    font-size: 1.3em;
+    margin-left: 8px;
+    animation: pop 0.6s infinite alternate;
+  }
+  .balloon-area {
+    position: relative;
+    width: 100%;
+    height: 460px;
+    background: linear-gradient(to bottom, #e3f2fd 0%, #bbdefb 60%, #c5e1a5 100%);
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 12px;
+  }
+  .balloon {
+    position: absolute;
+    width: 65px;
+    height: 80px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+    border-radius: 50% 50% 50% 50% / 55% 55% 45% 45%;
+    box-shadow: inset -8px -8px 15px rgba(0,0,0,0.2), inset 8px 8px 15px rgba(255,255,255,0.3);
+    transition: transform 0.1s;
+    bottom: -100px;
+  }
+  .balloon::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 25px;
+    background: #555;
+    bottom: -23px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .balloon:active { transform: scale(0.92); }
+  .balloon.popping {
+    animation: balloonPop 0.4s forwards;
+    pointer-events: none;
+  }
+  @keyframes balloonPop {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.4); opacity: 0.8; }
+    100% { transform: scale(0); opacity: 0; }
+  }
+  .balloon.wobble {
+    animation: wobble 0.4s;
+  }
+  @keyframes wobble {
+    0%,100% { transform: rotate(0); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+  }
+  .balloon-progress {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 1.1em;
+    color: #555;
+    font-weight: bold;
+  }
+
+  /* Monstro guloso */
+  .monster-scene {
+    text-align: center;
+    padding: 25px 10px 15px;
+    background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+    border-radius: 20px;
+    margin-bottom: 20px;
+  }
+  .monster {
+    font-size: 7em;
+    line-height: 1;
+    display: inline-block;
+    animation: monsterBounce 1.5s ease-in-out infinite;
+  }
+  @keyframes monsterBounce {
+    0%,100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-12px) scale(1.05); }
+  }
+  .monster.chewing {
+    animation: monsterChew 0.3s 4;
+  }
+  @keyframes monsterChew {
+    0%,100% { transform: scale(1) rotate(0); }
+    50% { transform: scale(1.2) rotate(-8deg); }
+  }
+  .monster-speech {
+    background: white;
+    border: 3px solid #e91e63;
+    border-radius: 25px;
+    padding: 12px 18px;
+    margin: 10px auto;
+    max-width: 340px;
+    font-size: 1.2em;
+    color: #c2185b;
+    font-weight: bold;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  .monster-speech::after {
+    content: '';
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; height: 0;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid white;
+  }
+  .number-target {
+    font-size: 3.5em;
+    font-weight: bold;
+    color: #e91e63;
+    margin: 5px 0 15px;
+    animation: pop 0.5s;
+  }
+  .big-num-choices {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 380px;
+    margin: 0 auto;
+  }
+  .big-num-btn {
+    height: 75px;
+    border-radius: 18px;
+    border: none;
+    background: linear-gradient(145deg, #f06292, #e91e63);
+    color: white;
+    font-size: 1.8em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #ad1457;
+  }
+  .big-num-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #ad1457; }
+
+  /* Vestir Panda */
+  .panda-instruction {
+    text-align: center;
+    background: #424242;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 18px;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .panda-instruction .en-word {
+    display: inline-block;
+    background: #ffd54f;
+    color: #424242;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin: 0 4px;
+    font-size: 1.15em;
+  }
+  .panda-stage {
+    background: linear-gradient(180deg, #fff9c4 0%, #ffe0b2 100%);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 320px;
+    position: relative;
+  }
+  .panda-svg {
+    width: 220px;
+    height: 280px;
+    position: relative;
+  }
+  .panda-svg svg { width: 100%; height: 100%; display: block; }
+  .panda-svg .clothing-item {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    animation: pop 0.4s;
+  }
+  .panda-svg .clothing-item svg { width: 100%; height: 100%; }
+  .clothing-choices {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+    gap: 12px;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .clothing-card {
+    background: white;
+    border: 4px solid #eee;
+    border-radius: 18px;
+    padding: 12px 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    min-height: 100px;
+  }
+  .clothing-card:hover { border-color: #ffd54f; transform: translateY(-3px); }
+  .clothing-card:active { transform: scale(0.95); }
+  .clothing-card.correct-flash { background: #c8e6c9; border-color: #4caf50; animation: pop 0.5s; }
+  .clothing-card.wrong-flash { background: #ffcdd2; border-color: #f44336; animation: shake 0.5s; }
+  .clothing-card svg {
+    width: 55px;
+    height: 55px;
+    display: block;
+  }
+  .clothing-card .pt-label {
+    font-size: 0.8em;
+    color: #888;
+    font-weight: bold;
+  }
+  .panda-progress {
+    text-align: center;
+    margin: 10px 0;
+    font-size: 0.95em;
+    color: #555;
+  }
+  .panda-progress .dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #ddd;
+    margin: 0 3px;
+    transition: background 0.3s;
+  }
+  .panda-progress .dot.done { background: #4caf50; }
+  .panda-progress .dot.current { background: #ffd54f; animation: pop 0.6s infinite alternate; }
+
   /* Inglês */
   .english-audio-area { text-align: center; margin-bottom: 25px; }
   .play-audio-btn {
@@ -305,13 +570,19 @@
 
   <div class="menu" id="menu">
     <button class="menu-btn btn-name active" onclick="startGame('name', event)">✏️ Nome</button>
+    <button class="menu-btn btn-alphabet" onclick="startGame('alphabet', event)">🎈 Balões</button>
     <button class="menu-btn btn-count" onclick="startGame('count', event)">🔢 Contar</button>
+    <button class="menu-btn btn-bignum" onclick="startGame('bignum', event)">👹 Monstro</button>
     <button class="menu-btn btn-add" onclick="startGame('add', event)">➕ Somar</button>
     <button class="menu-btn btn-sub" onclick="startGame('sub', event)">➖ Tirar</button>
     <button class="menu-btn btn-colors" onclick="startGame('colors', event)">🎨 Cores</button>
     <button class="menu-btn btn-shapes" onclick="startGame('shapes', event)">⭐ Formas</button>
     <button class="menu-btn btn-paint" onclick="startGame('paint', event)">🖌️ Pintar</button>
     <button class="menu-btn btn-english" onclick="startGame('english', event)">🇬🇧 Inglês</button>
+    <button class="menu-btn btn-panda" onclick="startGame('panda', event)">🐼 Vestir Panda</button>
+    <button class="menu-btn btn-maze" onclick="startGame('maze', event)">🐭 Labirinto</button>
+    <button class="menu-btn btn-match" onclick="startGame('match', event)">🔗 Ligar</button>
+    <button class="menu-btn btn-trace" onclick="startGame('trace', event)">✍️ Desenhar Letras</button>
   </div>
 
   <div class="game-area" id="gameArea">
@@ -596,13 +867,16 @@ function startGame(game, ev) {
   document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
   if (ev) ev.target.classList.add('active');
   if (game === 'name') renderNameGame();
+  if (game === 'alphabet') renderAlphabetGame();
   if (game === 'count') renderCountGame();
+  if (game === 'bignum') renderBigNumGame();
   if (game === 'add') renderMathGame('add');
   if (game === 'sub') renderMathGame('sub');
   if (game === 'colors') renderColorsGame();
   if (game === 'shapes') renderShapesGame();
   if (game === 'paint') renderPaintGame();
   if (game === 'english') renderEnglishGame();
+  if (game === 'panda') renderPandaGame();
 }
 
 // ========== NOME ==========
@@ -1104,8 +1378,256 @@ function tryPaint(partId, el) {
   }
 }
 
+// ========== ALFABETO (BALÕES) ==========
+const ALPHABET = ['A','B','C','D','E','F','G','H','I','J','L','M','N','O','P','Q','R','S','T','U','V','X','Z'];
+const LETTER_SOUNDS_PT = {
+  A:'á', B:'bê', C:'cê', D:'dê', E:'é', F:'éfe', G:'guê', H:'agá',
+  I:'i', J:'jota', L:'éle', M:'eme', N:'ene', O:'ó', P:'pê', Q:'quê',
+  R:'érre', S:'ésse', T:'tê', U:'u', V:'vê', X:'xis', Z:'zê'
+};
+const BALLOON_COLORS = ['#ef5350','#42a5f5','#66bb6a','#ffa726','#ab47bc','#26c6da','#ec407a','#7e57c2','#26a69a','#ff7043'];
+
+let alphabetTarget = '';
+let alphabetBalloonsLeft = 0;
+let alphabetCorrectFound = false;
+let balloonSpawnInterval = null;
+let alphabetActive = false;
+
+function renderAlphabetGame() {
+  alphabetActive = true;
+  pickNewAlphabetTarget();
+}
+
+function pickNewAlphabetTarget() {
+  alphabetTarget = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+  alphabetCorrectFound = false;
+  alphabetBalloonsLeft = 0;
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#00897b">🎈 Estoura os Balões!</h2>
+    <div class="balloon-target">
+      Estoura o <span class="target-letter">${alphabetTarget}</span>
+    </div>
+    <div class="balloon-area" id="balloonArea"></div>
+    <div class="balloon-progress" id="balloonProgress">Toca no balão certo! 👆</div>
+  `;
+
+  setTimeout(() => speak(`Estoura o ${LETTER_SOUNDS_PT[alphabetTarget]}`), 300);
+
+  // Limpar interval anterior
+  if (balloonSpawnInterval) clearInterval(balloonSpawnInterval);
+
+  // Spawn balões inicialmente
+  spawnBalloon(true); // primeiro é o correcto
+  for (let i = 0; i < 3; i++) {
+    setTimeout(() => spawnBalloon(false), 600 * (i + 1));
+  }
+
+  // Continuar a spawnar balões
+  balloonSpawnInterval = setInterval(() => {
+    if (!alphabetActive) {
+      clearInterval(balloonSpawnInterval);
+      return;
+    }
+    if (alphabetCorrectFound) return;
+    // 30% chance de ser a letra certa, para garantir que aparece com frequência
+    const isCorrect = Math.random() < 0.3;
+    spawnBalloon(isCorrect);
+  }, 1800);
+}
+
+function spawnBalloon(forceCorrect) {
+  const area = document.getElementById('balloonArea');
+  if (!area || !alphabetActive) return;
+
+  let letter;
+  if (forceCorrect) {
+    letter = alphabetTarget;
+  } else {
+    // Letra diferente da alvo
+    do {
+      letter = ALPHABET[Math.floor(Math.random() * ALPHABET.length)];
+    } while (letter === alphabetTarget);
+  }
+
+  const balloon = document.createElement('div');
+  balloon.className = 'balloon';
+  balloon.textContent = letter;
+  const color = BALLOON_COLORS[Math.floor(Math.random() * BALLOON_COLORS.length)];
+  balloon.style.background = color;
+
+  // Posição horizontal aleatória
+  const areaWidth = area.offsetWidth;
+  const left = 10 + Math.random() * (areaWidth - 90);
+  balloon.style.left = left + 'px';
+
+  // Duração de subida aleatória
+  const duration = 6 + Math.random() * 3;
+  balloon.style.animation = `floatUp ${duration}s linear forwards`;
+
+  balloon.onclick = () => popBalloon(balloon, letter);
+
+  area.appendChild(balloon);
+  alphabetBalloonsLeft++;
+
+  // Remover quando chega ao topo
+  setTimeout(() => {
+    if (balloon.parentNode) {
+      balloon.parentNode.removeChild(balloon);
+      alphabetBalloonsLeft--;
+    }
+  }, duration * 1000);
+}
+
+// Adicionar keyframe dinamicamente
+if (!document.getElementById('balloon-keyframes')) {
+  const style = document.createElement('style');
+  style.id = 'balloon-keyframes';
+  style.textContent = `
+    @keyframes floatUp {
+      from { bottom: -100px; }
+      to { bottom: 500px; }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function popBalloon(balloon, letter) {
+  if (balloon.classList.contains('popping')) return;
+
+  if (letter === alphabetTarget) {
+    // Acertou!
+    balloon.classList.add('popping');
+    sounds.win();
+    updateScore(3);
+    alphabetCorrectFound = true;
+
+    const progress = document.getElementById('balloonProgress');
+    if (progress) {
+      progress.innerHTML = `<span class="celebrate" style="color:#00897b">🎉 Boa! Era o ${alphabetTarget}!</span>`;
+    }
+    speak(`Boa! ${LETTER_SOUNDS_PT[alphabetTarget]}!`, 'pt-PT', false);
+
+    // Limpar balões existentes e ir para a próxima letra
+    setTimeout(() => {
+      if (alphabetActive) pickNewAlphabetTarget();
+    }, 1800);
+  } else {
+    // Errou
+    balloon.classList.add('wobble');
+    sounds.wrong();
+    setTimeout(() => balloon.classList.remove('wobble'), 400);
+    speak(`Esse é o ${LETTER_SOUNDS_PT[letter]}. Procura o ${LETTER_SOUNDS_PT[alphabetTarget]}!`, 'pt-PT', false);
+  }
+}
+
+// Parar balões quando se muda de jogo
+const originalStartGame = startGame;
+startGame = function(game, ev) {
+  alphabetActive = (game === 'alphabet');
+  if (balloonSpawnInterval && game !== 'alphabet') {
+    clearInterval(balloonSpawnInterval);
+    balloonSpawnInterval = null;
+  }
+  return originalStartGame(game, ev);
+};
+
+// ========== MONSTRO GULOSO (NÚMEROS 10-20) ==========
+const NUM_WORDS_TEEN = {
+  10: 'dez', 11: 'onze', 12: 'doze', 13: 'treze', 14: 'catorze',
+  15: 'quinze', 16: 'dezasseis', 17: 'dezassete', 18: 'dezoito',
+  19: 'dezanove', 20: 'vinte'
+};
+const MONSTERS = ['👹','👺','🦖','🐲','👾','🤖','👻','🐙'];
+const COOKIE_EMOJIS = ['🍪','🍩','🍰','🧁','🍫','🍬','🍭','🍦'];
+
+let bigNumTarget = 0;
+let currentMonster = '';
+let currentCookie = '';
+
+function renderBigNumGame() {
+  bigNumTarget = 10 + Math.floor(Math.random() * 11); // 10-20
+  currentMonster = MONSTERS[Math.floor(Math.random() * MONSTERS.length)];
+  currentCookie = COOKIE_EMOJIS[Math.floor(Math.random() * COOKIE_EMOJIS.length)];
+
+  // Gerar 6 opções, uma é a correcta
+  const opts = new Set([bigNumTarget]);
+  while (opts.size < 6) {
+    const r = 10 + Math.floor(Math.random() * 11);
+    opts.add(r);
+  }
+  const options = [...opts].sort(() => Math.random() - 0.5);
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#e91e63">👹 O Monstro está com fome!</h2>
+    <div class="monster-scene">
+      <div class="monster" id="monsterEl">${currentMonster}</div>
+      <div class="monster-speech">Quero <strong>${NUM_WORDS_TEEN[bigNumTarget]}</strong> ${getCookieName(currentCookie)}!</div>
+    </div>
+    <p class="instruction">Ouve o monstro e escolhe o número certo!</p>
+    <div class="big-num-choices">
+      ${options.map(n => `<button class="big-num-btn" onclick="checkBigNum(${n})">${n}</button>`).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div style="text-align:center;margin-top:15px">
+      <button class="replay-instruction" onclick="speak('Quero ${NUM_WORDS_TEEN[bigNumTarget]} ${getCookieName(currentCookie)}!', 'pt-PT', false)">
+        🔊 Ouvir o monstro outra vez
+      </button>
+    </div>
+  `;
+
+  setTimeout(() => speak(`Quero ${NUM_WORDS_TEEN[bigNumTarget]} ${getCookieName(currentCookie)}!`), 300);
+}
+
+function getCookieName(emoji) {
+  const names = {
+    '🍪':'bolachinhas', '🍩':'donuts', '🍰':'bolinhos', '🧁':'queques',
+    '🍫':'chocolates', '🍬':'rebuçados', '🍭':'chupa-chupas', '🍦':'gelados'
+  };
+  return names[emoji] || 'docinhos';
+}
+
+function checkBigNum(n) {
+  const fb = document.getElementById('feedback');
+  if (n === bigNumTarget) {
+    sounds.win();
+    updateScore(5);
+
+    // Animar a alimentar o monstro
+    const scene = document.querySelector('.monster-scene');
+    const monsterEl = document.getElementById('monsterEl');
+
+    // Criar bolachas a voar para o monstro
+    const cookiesRow = document.createElement('div');
+    cookiesRow.className = 'cookies-display';
+    cookiesRow.innerHTML = Array(Math.min(n, 12)).fill(0).map((_, i) =>
+      `<span class="cookie" style="animation-delay:${i*0.05}s">${currentCookie}</span>`
+    ).join('');
+    scene.appendChild(cookiesRow);
+
+    // Animar bolachas a serem comidas
+    setTimeout(() => {
+      cookiesRow.querySelectorAll('.cookie').forEach((c, i) => {
+        setTimeout(() => c.classList.add('eaten'), i * 80);
+      });
+      monsterEl.classList.add('chewing');
+    }, 400);
+
+    fb.innerHTML = `<span class="celebrate" style="color:#e91e63">🎉 Yummy! Eram ${NUM_WORDS_TEEN[bigNumTarget]}! 😋</span>`;
+    speak(`Boa Matilde! ${NUM_WORDS_TEEN[bigNumTarget]}! Yummy!`, 'pt-PT', false);
+
+    setTimeout(renderBigNumGame, 3000);
+  } else {
+    sounds.wrong();
+    fb.textContent = `Esse é ${NUM_WORDS_TEEN[n] || n}. Procura ${NUM_WORDS_TEEN[bigNumTarget]}!`;
+    speak(`Esse é ${NUM_WORDS_TEEN[n] || n}. Procura ${NUM_WORDS_TEEN[bigNumTarget]}!`, 'pt-PT', false);
+    setTimeout(() => fb.textContent = '', 2500);
+  }
+}
+
 // ========== INGLÊS ==========
 const englishWords = [
+  // Animais
   { en: 'cat', pt: 'gato', emoji: '🐱' }, { en: 'dog', pt: 'cão', emoji: '🐶' },
   { en: 'cow', pt: 'vaca', emoji: '🐮' }, { en: 'pig', pt: 'porco', emoji: '🐷' },
   { en: 'horse', pt: 'cavalo', emoji: '🐴' }, { en: 'sheep', pt: 'ovelha', emoji: '🐑' },
@@ -1114,19 +1636,40 @@ const englishWords = [
   { en: 'monkey', pt: 'macaco', emoji: '🐵' }, { en: 'fish', pt: 'peixe', emoji: '🐟' },
   { en: 'bird', pt: 'pássaro', emoji: '🐦' }, { en: 'duck', pt: 'pato', emoji: '🦆' },
   { en: 'bee', pt: 'abelha', emoji: '🐝' }, { en: 'butterfly', pt: 'borboleta', emoji: '🦋' },
+  { en: 'panda', pt: 'panda', emoji: '🐼' }, { en: 'frog', pt: 'rã', emoji: '🐸' },
+  // Comida
   { en: 'apple', pt: 'maçã', emoji: '🍎' }, { en: 'banana', pt: 'banana', emoji: '🍌' },
   { en: 'strawberry', pt: 'morango', emoji: '🍓' }, { en: 'grapes', pt: 'uvas', emoji: '🍇' },
   { en: 'orange', pt: 'laranja', emoji: '🍊' }, { en: 'watermelon', pt: 'melancia', emoji: '🍉' },
   { en: 'cake', pt: 'bolo', emoji: '🍰' }, { en: 'ice cream', pt: 'gelado', emoji: '🍦' },
   { en: 'cookie', pt: 'bolacha', emoji: '🍪' }, { en: 'bread', pt: 'pão', emoji: '🍞' },
   { en: 'cheese', pt: 'queijo', emoji: '🧀' }, { en: 'milk', pt: 'leite', emoji: '🥛' },
+  // Objetos
   { en: 'house', pt: 'casa', emoji: '🏠' }, { en: 'car', pt: 'carro', emoji: '🚗' },
   { en: 'bus', pt: 'autocarro', emoji: '🚌' }, { en: 'train', pt: 'comboio', emoji: '🚂' },
   { en: 'airplane', pt: 'avião', emoji: '✈️' }, { en: 'boat', pt: 'barco', emoji: '⛵' },
   { en: 'ball', pt: 'bola', emoji: '⚽' }, { en: 'book', pt: 'livro', emoji: '📕' },
   { en: 'sun', pt: 'sol', emoji: '☀️' }, { en: 'moon', pt: 'lua', emoji: '🌙' },
   { en: 'star', pt: 'estrela', emoji: '⭐' }, { en: 'flower', pt: 'flor', emoji: '🌸' },
-  { en: 'tree', pt: 'árvore', emoji: '🌳' }, { en: 'heart', pt: 'coração', emoji: '❤️' }
+  { en: 'tree', pt: 'árvore', emoji: '🌳' }, { en: 'heart', pt: 'coração', emoji: '❤️' },
+  // Cores (mostra um círculo colorido grande)
+  { en: 'red', pt: 'vermelho', emoji: '🟥' }, { en: 'blue', pt: 'azul', emoji: '🟦' },
+  { en: 'yellow', pt: 'amarelo', emoji: '🟨' }, { en: 'green', pt: 'verde', emoji: '🟩' },
+  { en: 'orange', pt: 'laranja', emoji: '🟧' }, { en: 'purple', pt: 'roxo', emoji: '🟪' },
+  { en: 'brown', pt: 'castanho', emoji: '🟫' }, { en: 'black', pt: 'preto', emoji: '⬛' },
+  { en: 'white', pt: 'branco', emoji: '⬜' }, { en: 'pink', pt: 'cor-de-rosa', emoji: '🌷' },
+  // Formas (SVG renderizado como emoji-fallback - usa círculos coloridos / símbolos)
+  { en: 'circle', pt: 'círculo', emoji: '⭕' }, { en: 'square', pt: 'quadrado', emoji: '🟦' },
+  { en: 'triangle', pt: 'triângulo', emoji: '🔺' }, { en: 'star shape', pt: 'estrela', emoji: '⭐' },
+  { en: 'heart', pt: 'coração', emoji: '❤️' }, { en: 'diamond', pt: 'losango', emoji: '🔶' },
+  // Roupa
+  { en: 't-shirt', pt: 't-shirt', emoji: '👕' }, { en: 'dress', pt: 'vestido', emoji: '👗' },
+  { en: 'pants', pt: 'calças', emoji: '👖' }, { en: 'skirt', pt: 'saia', emoji: '👚' },
+  { en: 'shoes', pt: 'sapatos', emoji: '👟' }, { en: 'boots', pt: 'botas', emoji: '👢' },
+  { en: 'hat', pt: 'chapéu', emoji: '🎩' }, { en: 'crown', pt: 'coroa', emoji: '👑' },
+  { en: 'sunglasses', pt: 'óculos de sol', emoji: '🕶️' }, { en: 'glasses', pt: 'óculos', emoji: '👓' },
+  { en: 'bag', pt: 'mala', emoji: '👜' }, { en: 'umbrella', pt: 'guarda-chuva', emoji: '☂️' },
+  { en: 'coat', pt: 'casaco', emoji: '🧥' }, { en: 'socks', pt: 'meias', emoji: '🧦' }
 ];
 
 let currentEnglishWord = null;
@@ -1179,13 +1722,12 @@ function checkEnglish(en, pt, cardIdx) {
     englishAnswered = true;
     card.classList.add('correct-flash');
     sounds.win();
-    fb.innerHTML = `<span class="celebrate">🎉 Boa! "${currentEnglishWord.en}" é ${currentEnglishWord.pt}! 🌟</span>`;
+    fb.innerHTML = `<span class="celebrate">🎉 ${currentEnglishWord.en}! 🌟</span>`;
     updateScore(4);
-    // Diz "boa" em PT, depois a palavra em EN, depois a tradução
+    // Só diz "Boa Matilde" em PT e repete a palavra em inglês
     speak('Boa Matilde!', 'pt-PT', false);
     setTimeout(() => speak(currentEnglishWord.en, 'en-US', false), 900);
-    setTimeout(() => speak(`em português é ${currentEnglishWord.pt}`, 'pt-PT', false), 1900);
-    setTimeout(renderEnglishGame, 3800);
+    setTimeout(renderEnglishGame, 2800);
   } else {
     card.classList.add('wrong-flash');
     sounds.wrong();
@@ -1195,6 +1737,387 @@ function checkEnglish(en, pt, cardIdx) {
       speak(currentEnglishWord.en, 'en-US', false);
     }, 1800);
   }
+}
+
+// ========== VESTIR O PANDA (Inglês) ==========
+const PANDA_COLORS = {
+  red:    { hex: '#e53935', pt: 'vermelho' },
+  blue:   { hex: '#1e88e5', pt: 'azul' },
+  yellow: { hex: '#fdd835', pt: 'amarelo' },
+  green:  { hex: '#43a047', pt: 'verde' },
+  pink:   { hex: '#ec407a', pt: 'cor de rosa' },
+  purple: { hex: '#8e24aa', pt: 'roxo' },
+  orange: { hex: '#fb8c00', pt: 'laranja' }
+};
+
+// Cada peça é uma função que retorna SVG dado uma cor
+const CLOTHING_SVG = {
+  // Roupa do corpo
+  tshirt: (c) => `<svg viewBox="0 0 220 280"><path d="M 60 130 L 75 120 L 95 130 Q 110 138 125 130 L 145 120 L 160 130 L 170 145 L 160 155 L 150 150 L 150 200 L 70 200 L 70 150 L 60 155 L 50 145 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  dress: (c) => `<svg viewBox="0 0 220 280"><path d="M 65 130 L 75 120 L 95 130 Q 110 138 125 130 L 145 120 L 155 130 L 160 145 L 152 150 L 152 175 L 175 240 L 45 240 L 68 175 L 68 150 L 60 145 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  skirt: (c) => `<svg viewBox="0 0 220 280"><path d="M 75 175 L 145 175 L 165 235 L 55 235 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  pants: (c) => `<svg viewBox="0 0 220 280"><path d="M 78 175 L 142 175 L 145 240 L 120 240 L 115 200 L 110 200 L 105 200 L 100 240 L 75 240 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  coat: (c) => `<svg viewBox="0 0 220 280"><path d="M 55 130 L 75 120 L 95 130 Q 110 138 125 130 L 145 120 L 165 130 L 170 200 L 155 210 L 150 200 L 150 170 L 110 175 L 70 170 L 70 200 L 65 210 L 50 200 Z" fill="${c}" stroke="#333" stroke-width="2"/><line x1="110" y1="130" x2="110" y2="200" stroke="#333" stroke-width="1.5"/></svg>`,
+  // Chapéus / cabeça
+  hat: (c) => `<svg viewBox="0 0 220 280"><ellipse cx="110" cy="55" rx="55" ry="8" fill="${c}" stroke="#333" stroke-width="2"/><path d="M 80 55 L 85 20 Q 110 12 135 20 L 140 55 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  crown: (c) => `<svg viewBox="0 0 220 280"><path d="M 75 50 L 80 25 L 95 40 L 110 20 L 125 40 L 140 25 L 145 50 Z" fill="${c}" stroke="#333" stroke-width="2"/><circle cx="80" cy="25" r="3" fill="#fff"/><circle cx="110" cy="20" r="3" fill="#fff"/><circle cx="140" cy="25" r="3" fill="#fff"/></svg>`,
+  bow: (c) => `<svg viewBox="0 0 220 280"><path d="M 90 45 Q 75 35 75 50 Q 75 65 95 55 L 110 55 L 125 55 Q 145 65 145 50 Q 145 35 130 45 Z" fill="${c}" stroke="#333" stroke-width="2"/><circle cx="110" cy="55" r="6" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  // Acessórios cara
+  glasses: () => `<svg viewBox="0 0 220 280"><circle cx="92" cy="92" r="14" fill="rgba(180,220,255,0.5)" stroke="#333" stroke-width="2.5"/><circle cx="128" cy="92" r="14" fill="rgba(180,220,255,0.5)" stroke="#333" stroke-width="2.5"/><line x1="106" y1="92" x2="114" y2="92" stroke="#333" stroke-width="2.5"/></svg>`,
+  sunglasses: () => `<svg viewBox="0 0 220 280"><rect x="78" y="82" width="28" height="18" rx="6" fill="#212121" stroke="#333" stroke-width="2"/><rect x="114" y="82" width="28" height="18" rx="6" fill="#212121" stroke="#333" stroke-width="2"/><line x1="106" y1="91" x2="114" y2="91" stroke="#333" stroke-width="2.5"/></svg>`,
+  // Calçado
+  shoes: (c) => `<svg viewBox="0 0 220 280"><ellipse cx="85" cy="252" rx="22" ry="10" fill="${c}" stroke="#333" stroke-width="2"/><ellipse cx="135" cy="252" rx="22" ry="10" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  boots: (c) => `<svg viewBox="0 0 220 280"><path d="M 70 230 L 100 230 L 102 255 L 65 255 Z" fill="${c}" stroke="#333" stroke-width="2"/><path d="M 120 230 L 150 230 L 155 255 L 118 255 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  // Outros
+  bag: (c) => `<svg viewBox="0 0 220 280"><rect x="155" y="160" width="35" height="40" rx="5" fill="${c}" stroke="#333" stroke-width="2"/><path d="M 162 160 Q 172 145 182 160" fill="none" stroke="#333" stroke-width="2.5"/></svg>`,
+  scarf: (c) => `<svg viewBox="0 0 220 280"><path d="M 75 125 Q 110 140 145 125 L 148 140 Q 110 152 72 140 Z" fill="${c}" stroke="#333" stroke-width="2"/><path d="M 140 138 L 148 175 L 138 175 L 132 142 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  necklace: (c) => `<svg viewBox="0 0 220 280"><path d="M 80 130 Q 110 155 140 130" fill="none" stroke="${c}" stroke-width="3"/><circle cx="110" cy="148" r="6" fill="${c}" stroke="#333" stroke-width="1.5"/></svg>`,
+  belt: (c) => `<svg viewBox="0 0 220 280"><rect x="65" y="195" width="90" height="12" fill="${c}" stroke="#333" stroke-width="2"/><rect x="106" y="194" width="10" height="14" fill="#ffd54f" stroke="#333" stroke-width="1.5"/></svg>`,
+  socks: (c) => `<svg viewBox="0 0 220 280"><rect x="78" y="218" width="20" height="30" rx="3" fill="${c}" stroke="#333" stroke-width="2"/><rect x="122" y="218" width="20" height="30" rx="3" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  sandals: (c) => `<svg viewBox="0 0 220 280"><ellipse cx="85" cy="252" rx="20" ry="6" fill="${c}" stroke="#333" stroke-width="2"/><path d="M 85 246 L 80 235 M 85 246 L 90 235" stroke="${c}" stroke-width="2.5"/><ellipse cx="135" cy="252" rx="20" ry="6" fill="${c}" stroke="#333" stroke-width="2"/><path d="M 135 246 L 130 235 M 135 246 L 140 235" stroke="${c}" stroke-width="2.5"/></svg>`,
+  cap: (c) => `<svg viewBox="0 0 220 280"><path d="M 75 60 Q 110 30 145 60 L 145 65 L 75 65 Z" fill="${c}" stroke="#333" stroke-width="2"/><ellipse cx="140" cy="68" rx="22" ry="5" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  headband: (c) => `<svg viewBox="0 0 220 280"><path d="M 70 60 Q 110 45 150 60 L 148 70 Q 110 58 72 70 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  shorts: (c) => `<svg viewBox="0 0 220 280"><path d="M 78 175 L 142 175 L 145 215 L 120 215 L 115 195 L 110 195 L 105 195 L 100 215 L 75 215 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`,
+  sweater: (c) => `<svg viewBox="0 0 220 280"><path d="M 60 130 L 80 118 Q 110 128 140 118 L 160 130 L 170 160 L 158 165 L 152 155 L 152 215 L 68 215 L 68 155 L 62 165 L 50 160 Z" fill="${c}" stroke="#333" stroke-width="2"/></svg>`
+};
+
+const PANDA_BASE = `
+  <svg viewBox="0 0 220 280" xmlns="http://www.w3.org/2000/svg">
+    <!-- Pernas -->
+    <ellipse cx="90" cy="240" rx="12" ry="20" fill="#fff" stroke="#333" stroke-width="2"/>
+    <ellipse cx="130" cy="240" rx="12" ry="20" fill="#fff" stroke="#333" stroke-width="2"/>
+    <!-- Corpo -->
+    <ellipse cx="110" cy="180" rx="50" ry="55" fill="#fff" stroke="#333" stroke-width="2"/>
+    <!-- Braços -->
+    <ellipse cx="62" cy="175" rx="14" ry="28" fill="#212121"/>
+    <ellipse cx="158" cy="175" rx="14" ry="28" fill="#212121"/>
+    <!-- Cabeça -->
+    <circle cx="110" cy="90" r="45" fill="#fff" stroke="#333" stroke-width="2"/>
+    <!-- Orelhas -->
+    <circle cx="75" cy="55" r="15" fill="#212121"/>
+    <circle cx="145" cy="55" r="15" fill="#212121"/>
+    <!-- Manchas dos olhos -->
+    <ellipse cx="92" cy="92" rx="10" ry="14" fill="#212121" transform="rotate(-15 92 92)"/>
+    <ellipse cx="128" cy="92" rx="10" ry="14" fill="#212121" transform="rotate(15 128 92)"/>
+    <!-- Olhos brancos -->
+    <circle cx="93" cy="93" r="4" fill="#fff"/>
+    <circle cx="127" cy="93" r="4" fill="#fff"/>
+    <circle cx="94" cy="93" r="2" fill="#212121"/>
+    <circle cx="126" cy="93" r="2" fill="#212121"/>
+    <!-- Nariz -->
+    <ellipse cx="110" cy="108" rx="5" ry="3.5" fill="#212121"/>
+    <!-- Boca -->
+    <path d="M 110 112 L 110 118 M 110 118 Q 102 124 98 120 M 110 118 Q 118 124 122 120" fill="none" stroke="#212121" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+`;
+
+// Níveis do jogo: cada nível tem peças de uma categoria
+// Importante: cada nível tem 4+ peças para garantir distratores fortes (mesma cor, peças diferentes)
+const PANDA_LEVELS = [
+  {
+    name: 'roupa',
+    intro: 'Vamos vestir o panda!',
+    items: [
+      { en: 't-shirt', pt: 't-shirt', svgKey: 'tshirt', useColor: true },
+      { en: 'dress', pt: 'vestido', svgKey: 'dress', useColor: true },
+      { en: 'skirt', pt: 'saia', svgKey: 'skirt', useColor: true },
+      { en: 'pants', pt: 'calças', svgKey: 'pants', useColor: true },
+      { en: 'coat', pt: 'casaco', svgKey: 'coat', useColor: true },
+      { en: 'sweater', pt: 'camisola', svgKey: 'sweater', useColor: true },
+      { en: 'shorts', pt: 'calções', svgKey: 'shorts', useColor: true }
+    ],
+    rounds: 3
+  },
+  {
+    name: 'cabeça',
+    intro: 'Agora vamos pôr coisas na cabeça do panda!',
+    items: [
+      { en: 'hat', pt: 'chapéu', svgKey: 'hat', useColor: true },
+      { en: 'crown', pt: 'coroa', svgKey: 'crown', useColor: true },
+      { en: 'bow', pt: 'laço', svgKey: 'bow', useColor: true },
+      { en: 'cap', pt: 'boné', svgKey: 'cap', useColor: true },
+      { en: 'headband', pt: 'fita', svgKey: 'headband', useColor: true }
+    ],
+    rounds: 2
+  },
+  {
+    name: 'cara',
+    intro: 'Vamos pôr óculos no panda!',
+    items: [
+      { en: 'glasses', pt: 'óculos', svgKey: 'glasses', useColor: false },
+      { en: 'sunglasses', pt: 'óculos de sol', svgKey: 'sunglasses', useColor: false }
+    ],
+    rounds: 1
+  },
+  {
+    name: 'pés',
+    intro: 'O panda quer calçar sapatos!',
+    items: [
+      { en: 'shoes', pt: 'sapatos', svgKey: 'shoes', useColor: true },
+      { en: 'boots', pt: 'botas', svgKey: 'boots', useColor: true },
+      { en: 'sandals', pt: 'sandálias', svgKey: 'sandals', useColor: true },
+      { en: 'socks', pt: 'meias', svgKey: 'socks', useColor: true }
+    ],
+    rounds: 2
+  },
+  {
+    name: 'acessórios',
+    intro: 'E para acabar, acessórios!',
+    items: [
+      { en: 'bag', pt: 'mala', svgKey: 'bag', useColor: true },
+      { en: 'scarf', pt: 'cachecol', svgKey: 'scarf', useColor: true },
+      { en: 'necklace', pt: 'colar', svgKey: 'necklace', useColor: true },
+      { en: 'belt', pt: 'cinto', svgKey: 'belt', useColor: true }
+    ],
+    rounds: 2
+  }
+];
+
+let pandaLevelIdx = 0;
+let pandaRoundIdx = 0;
+let pandaTotalRounds = 0;
+let pandaCurrentRoundCount = 0;
+let pandaWornLayers = []; // {svgKey, color} para acumular peças
+let pandaCurrentTarget = null;
+let pandaAnswered = false;
+
+function renderPandaGame() {
+  pandaLevelIdx = 0;
+  pandaRoundIdx = 0;
+  pandaWornLayers = [];
+  pandaTotalRounds = PANDA_LEVELS.reduce((s, l) => s + l.rounds, 0);
+  pandaCurrentRoundCount = 0;
+  nextPandaRound(true);
+}
+
+function nextPandaRound(isStartOfLevel) {
+  const level = PANDA_LEVELS[pandaLevelIdx];
+  if (!level) {
+    // Acabou tudo!
+    showPandaCompletion();
+    return;
+  }
+
+  if (pandaRoundIdx >= level.rounds) {
+    // Próximo nível
+    pandaLevelIdx++;
+    pandaRoundIdx = 0;
+    nextPandaRound(true);
+    return;
+  }
+
+  pandaCurrentRoundCount++;
+  pandaAnswered = false;
+
+  // Escolher item e cor
+  const item = level.items[Math.floor(Math.random() * level.items.length)];
+  const colorKeys = Object.keys(PANDA_COLORS);
+  const colorKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+  const color = PANDA_COLORS[colorKey];
+
+  pandaCurrentTarget = { item, colorKey, color };
+
+  // Gerar opções: 4 cards estratégicos para forçar a aprender o vocabulário da peça.
+  // Regra: PELO MENOS 2 peças DIFERENTES com a MESMA COR da correta (assim não pode adivinhar só pela cor).
+  // O ideal são 3-4 peças com a mesma cor.
+  const choices = [{ item, colorKey }];
+
+  if (item.useColor) {
+    // Adicionar OUTRAS peças com a MESMA cor que a alvo - isto é o crítico
+    const otherItemsSameColor = level.items
+      .filter(i => i.en !== item.en && i.useColor)
+      .sort(() => Math.random() - 0.5);
+
+    // Adicionar até 2-3 peças com a mesma cor (distratores fortes)
+    const numSameColor = Math.min(otherItemsSameColor.length, 2 + Math.floor(Math.random() * 2));
+    for (let k = 0; k < numSameColor && choices.length < 4; k++) {
+      choices.push({ item: otherItemsSameColor[k], colorKey });
+    }
+
+    // Se sobrar espaço, adicionar a peça correta noutra cor (distrator mais fraco)
+    if (choices.length < 4) {
+      const otherColors = colorKeys.filter(c => c !== colorKey).sort(() => Math.random() - 0.5);
+      choices.push({ item, colorKey: otherColors[0] });
+    }
+
+    // Se ainda sobrar, mais peças diferentes com a mesma cor ou outras combinações
+    while (choices.length < 4) {
+      const remaining = level.items.filter(i =>
+        !choices.some(c => c.item.en === i.en && c.colorKey === colorKey)
+      );
+      if (remaining.length > 0) {
+        const ri = remaining[Math.floor(Math.random() * remaining.length)];
+        choices.push({ item: ri, colorKey: ri.useColor ? colorKey : 'red' });
+      } else {
+        // Fallback: peça aleatória com cor aleatória
+        const ri = level.items[Math.floor(Math.random() * level.items.length)];
+        const rc = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+        if (!choices.some(c => c.item.en === ri.en && c.colorKey === rc)) {
+          choices.push({ item: ri, colorKey: rc });
+        } else {
+          break;
+        }
+      }
+    }
+  } else {
+    // Item sem cor (óculos, etc.) - basta variar items
+    const otherItems = level.items.filter(i => i.en !== item.en).sort(() => Math.random() - 0.5);
+    let i2 = 0;
+    while (choices.length < 4 && i2 < otherItems.length) {
+      const otherItem = otherItems[i2++];
+      const cKey = otherItem.useColor ? colorKeys[Math.floor(Math.random() * colorKeys.length)] : 'red';
+      choices.push({ item: otherItem, colorKey: cKey });
+    }
+    // Se faltarem, encher com peças com cor
+    while (choices.length < 4) {
+      const ri = level.items[Math.floor(Math.random() * level.items.length)];
+      const rc = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+      if (!choices.some(c => c.item.en === ri.en && c.colorKey === rc)) {
+        choices.push({ item: ri, colorKey: rc });
+      } else {
+        break;
+      }
+    }
+  }
+
+  choices.sort(() => Math.random() - 0.5);
+
+  // Construir instrução
+  let instructionHtml, instructionSpeak;
+  if (item.useColor) {
+    instructionHtml = `Put the <span class="en-word">${color.en || colorKey}</span> <span class="en-word">${item.en}</span> on the panda!`;
+    instructionSpeak = `Put the ${colorKey} ${item.en} on the panda!`;
+  } else {
+    instructionHtml = `Put the <span class="en-word">${item.en}</span> on the panda!`;
+    instructionSpeak = `Put the ${item.en} on the panda!`;
+  }
+
+  // Construir vista do panda com camadas atuais
+  let pandaHtml = `<div class="panda-svg">${PANDA_BASE}`;
+  pandaWornLayers.forEach(layer => {
+    const svgFn = CLOTHING_SVG[layer.svgKey];
+    if (svgFn) {
+      pandaHtml += `<div class="clothing-item">${svgFn(layer.color || '#888')}</div>`;
+    }
+  });
+  pandaHtml += `</div>`;
+
+  // Progresso visual
+  let progressDots = '';
+  let cum = 0;
+  for (let lvl = 0; lvl < PANDA_LEVELS.length; lvl++) {
+    for (let r = 0; r < PANDA_LEVELS[lvl].rounds; r++) {
+      cum++;
+      let cls = 'dot';
+      if (cum < pandaCurrentRoundCount) cls += ' done';
+      else if (cum === pandaCurrentRoundCount) cls += ' current';
+      progressDots += `<span class="${cls}"></span>`;
+    }
+  }
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#424242">🐼 Dress the Panda!</h2>
+    <div class="panda-instruction">${instructionHtml}</div>
+    <div class="panda-stage">${pandaHtml}</div>
+    <div class="panda-progress">${progressDots}</div>
+    <div class="clothing-choices">
+      ${choices.map((c, idx) => {
+        const svgFn = CLOTHING_SVG[c.item.svgKey];
+        const colorHex = c.item.useColor ? PANDA_COLORS[c.colorKey].hex : '#666';
+        const svg = svgFn ? svgFn(colorHex) : '';
+        // Para mostrar mini-preview da peça, mostramos apenas o SVG sem fundo do panda
+        return `
+          <div class="clothing-card" id="panda-card-${idx}" onclick="checkPandaChoice('${c.item.svgKey}','${c.colorKey}',${idx})">
+            <div style="width:55px;height:55px;background:#f5f5f5;border-radius:10px;display:flex;align-items:center;justify-content:center;overflow:hidden">
+              <svg viewBox="40 20 140 240" style="width:60px;height:60px">${getMiniPreview(c.item.svgKey, colorHex)}</svg>
+            </div>
+            <div class="pt-label">${c.item.useColor ? PANDA_COLORS[c.colorKey].pt + ' ' + c.item.pt : c.item.pt}</div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+    <div style="text-align:center;margin-top:15px">
+      <button class="replay-instruction" onclick="speak('${instructionSpeak}', 'en-US', false)" style="color:#d32f2f;border-color:#d32f2f;box-shadow:0 4px 0 #b71c1c">
+        🔊 Listen again
+      </button>
+    </div>
+  `;
+
+  // Falar a instrução em inglês (sem introdução em português - imersão total)
+  setTimeout(() => speak(instructionSpeak, 'en-US', false), 400);
+}
+
+function getMiniPreview(svgKey, color) {
+  const fn = CLOTHING_SVG[svgKey];
+  if (!fn) return '';
+  // Extrair só o conteúdo SVG (sem o <svg> wrapper) da função
+  const fullSvg = fn(color);
+  const match = fullSvg.match(/<svg[^>]*>([\s\S]*)<\/svg>/);
+  return match ? match[1] : '';
+}
+
+function checkPandaChoice(svgKey, colorKey, cardIdx) {
+  if (pandaAnswered) return;
+  const card = document.getElementById(`panda-card-${cardIdx}`);
+  const isItemRight = svgKey === pandaCurrentTarget.item.svgKey;
+  const isColorRight = !pandaCurrentTarget.item.useColor || colorKey === pandaCurrentTarget.colorKey;
+
+  if (isItemRight && isColorRight) {
+    pandaAnswered = true;
+    card.classList.add('correct-flash');
+    sounds.win();
+    updateScore(4);
+
+    // Vestir o panda
+    const colorHex = pandaCurrentTarget.item.useColor ? pandaCurrentTarget.color.hex : '#666';
+    pandaWornLayers.push({ svgKey: pandaCurrentTarget.item.svgKey, color: colorHex });
+
+    // Som de sucesso em inglês + português
+    const itemEn = pandaCurrentTarget.item.en;
+    speak('Great job!', 'en-US', false);
+    setTimeout(() => speak(itemEn, 'en-US', false), 800);
+
+    setTimeout(() => {
+      pandaRoundIdx++;
+      nextPandaRound(false);
+    }, 2200);
+  } else {
+    card.classList.add('wrong-flash');
+    sounds.wrong();
+    setTimeout(() => card.classList.remove('wrong-flash'), 600);
+    // Dica: repetir a instrução em inglês
+    setTimeout(() => {
+      const itemEn = pandaCurrentTarget.item.en;
+      const colorEn = pandaCurrentTarget.colorKey;
+      if (pandaCurrentTarget.item.useColor) {
+        speak(`Try again. Find the ${colorEn} ${itemEn}.`, 'en-US', false);
+      } else {
+        speak(`Try again. Find the ${itemEn}.`, 'en-US', false);
+      }
+    }, 700);
+  }
+}
+
+function showPandaCompletion() {
+  // Mostrar panda completamente vestido
+  let pandaHtml = `<div class="panda-svg">${PANDA_BASE}`;
+  pandaWornLayers.forEach(layer => {
+    const svgFn = CLOTHING_SVG[layer.svgKey];
+    if (svgFn) {
+      pandaHtml += `<div class="clothing-item">${svgFn(layer.color || '#888')}</div>`;
+    }
+  });
+  pandaHtml += `</div>`;
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#424242">🎉 Look at the Panda! 🐼</h2>
+    <div class="panda-stage">${pandaHtml}</div>
+    <div class="feedback"><span class="celebrate">🌟 Wow! Great job! 🌟</span></div>
+    <button class="next-btn" onclick="renderPandaGame()">Dress another panda! 🐼</button>
+  `;
+  sounds.win();
+  speak('Wow! Look at the panda! Well done!', 'en-US', false);
 }
 </script>
 </body>
