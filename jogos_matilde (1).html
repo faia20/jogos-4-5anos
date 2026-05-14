@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jogos da Matilde 🌟</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Comic Sans MS', 'Trebuchet MS', sans-serif; user-select: none; -webkit-tap-highlight-color: transparent; }
+  body {
+    background: linear-gradient(135deg, #ffd6e8 0%, #c5e8ff 50%, #d4f5d4 100%);
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 900px; margin: 0 auto; }
+  h1 {
+    text-align: center; color: #ff4081; font-size: 2.5em; margin-bottom: 10px;
+    text-shadow: 3px 3px 0 #fff, 6px 6px 0 rgba(0,0,0,0.1);
+    animation: bounce 2s infinite;
+  }
+  .subtitle { text-align: center; color: #555; font-size: 1.2em; margin-bottom: 15px; }
+  @keyframes bounce { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+
+  /* Botão para repetir instrução */
+  .replay-btn-area {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  .replay-instruction {
+    background: white;
+    border: 3px solid #ff4081;
+    color: #ff4081;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 0 #c2185b;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .replay-instruction:active { transform: translateY(2px); box-shadow: 0 2px 0 #c2185b; }
+
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 10px;
+    margin-bottom: 25px;
+  }
+  .menu-btn {
+    padding: 16px 10px; border: none; border-radius: 18px;
+    font-size: 1em; font-weight: bold; cursor: pointer;
+    transition: all 0.2s; color: white; box-shadow: 0 6px 0 rgba(0,0,0,0.2);
+  }
+  .menu-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.2); }
+  .menu-btn.active { transform: scale(1.05); }
+  .btn-name { background: #ff4081; }
+  .btn-count { background: #4caf50; }
+  .btn-add { background: #9c27b0; }
+  .btn-sub { background: #673ab7; }
+  .btn-colors { background: #2196f3; }
+  .btn-shapes { background: #ff9800; }
+  .btn-paint { background: #00bcd4; }
+  .btn-english { background: #f44336; }
+
+  .game-area {
+    background: white; border-radius: 25px; padding: 30px 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); min-height: 400px;
+  }
+  .game-title { text-align: center; color: #333; font-size: 1.6em; margin-bottom: 20px; }
+  .instruction { text-align: center; font-size: 1.2em; color: #666; margin-bottom: 20px; }
+
+  /* Nome */
+  .name-slots { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; }
+  .slot {
+    width: 60px; height: 70px; border: 4px dashed #ccc; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2em; font-weight: bold; background: #f9f9f9; transition: all 0.3s; color: #333;
+  }
+  .slot.filled { border-style: solid; border-color: #4caf50; background: #e8f5e9; }
+  .slot.correct { background: #c8e6c9; border-color: #4caf50; animation: pop 0.4s; }
+  .slot.wrong { background: #ffcdd2; border-color: #f44336; animation: shake 0.5s; }
+  .slot.next-hint { border-color: #ff4081; animation: hintPulse 1.5s infinite; }
+  @keyframes pop { 0%{transform:scale(1);} 50%{transform:scale(1.2);} 100%{transform:scale(1);} }
+  @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-8px);} 75%{transform:translateX(8px);} }
+  @keyframes hintPulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(255,64,129,0.5); }
+    50% { box-shadow: 0 0 0 10px rgba(255,64,129,0); }
+  }
+  .letters-pool { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  .letter-btn {
+    width: 60px; height: 60px; border: none; border-radius: 12px;
+    background: linear-gradient(145deg, #ffeb3b, #fbc02d);
+    font-size: 1.8em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 5px 0 #f57f17; transition: all 0.15s; color: #333;
+  }
+  .letter-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #f57f17; }
+  .letter-btn.used { opacity: 0.3; pointer-events: none; }
+
+  /* Contar */
+  .count-area {
+    display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;
+    padding: 20px; background: #fff9e6; border-radius: 15px;
+    margin-bottom: 25px; min-height: 140px; align-items: center;
+  }
+  .count-item { font-size: 3em; animation: float 2s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-8px) rotate(5deg);} }
+  .number-choices { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+  .number-btn {
+    width: 80px; height: 80px; border-radius: 50%; border: none;
+    background: linear-gradient(145deg, #66bb6a, #43a047);
+    color: white; font-size: 2em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 5px 0 #2e7d32;
+  }
+  .number-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #2e7d32; }
+
+  /* Matemática */
+  .math-equation {
+    display: flex; justify-content: center; align-items: center;
+    gap: 10px; font-weight: bold; margin-bottom: 20px; flex-wrap: wrap;
+  }
+  .math-group {
+    background: #f3e5f5; border-radius: 15px; padding: 15px 20px;
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;
+    align-items: center; min-width: 80px; min-height: 80px;
+  }
+  .math-group.sub-style { background: #ede7f6; }
+  .math-item { font-size: 1.8em; animation: float 2s ease-in-out infinite; }
+  .math-sign { font-size: 1.5em; color: #555; }
+  .math-choices { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+  .math-btn {
+    width: 80px; height: 80px; border-radius: 20px; border: none;
+    color: white; font-size: 2em; font-weight: bold; cursor: pointer;
+  }
+  .math-btn.add-btn { background: linear-gradient(145deg, #ba68c8, #8e24aa); box-shadow: 0 5px 0 #6a1b9a; }
+  .math-btn.sub-btn { background: linear-gradient(145deg, #9575cd, #5e35b1); box-shadow: 0 5px 0 #4527a0; }
+  .math-btn:active { transform: translateY(3px); }
+  .math-btn.add-btn:active { box-shadow: 0 2px 0 #6a1b9a; }
+  .math-btn.sub-btn:active { box-shadow: 0 2px 0 #4527a0; }
+
+  /* Cores */
+  .color-target {
+    text-align: center; font-size: 1.8em; margin-bottom: 25px;
+    padding: 20px; border-radius: 15px; color: white; font-weight: bold;
+  }
+  .color-choices {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 15px; max-width: 500px; margin: 0 auto;
+  }
+  .color-btn {
+    height: 100px; border: 4px solid white; border-radius: 20px;
+    cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: all 0.15s;
+  }
+  .color-btn:active { transform: scale(0.95); }
+
+  /* Formas */
+  .shape-target { text-align: center; font-size: 1.8em; margin-bottom: 25px; color: #ff9800; font-weight: bold; }
+  .shapes-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px; max-width: 600px; margin: 0 auto;
+  }
+  .shape-btn {
+    height: 120px; border: none; background: white; border-radius: 15px;
+    cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+  }
+  .shape-btn:active { transform: scale(0.95); }
+  .shape-btn svg { width: 80px; height: 80px; }
+
+  /* Pintar */
+  .paint-instruction {
+    text-align: center; font-size: 1.4em; padding: 15px; border-radius: 15px;
+    margin-bottom: 20px; font-weight: bold; background: #e0f7fa; color: #00838f;
+    min-height: 60px; display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 10px;
+  }
+  .paint-canvas-wrap { display: flex; justify-content: center; margin-bottom: 20px; }
+  .paint-canvas {
+    background: #fafafa; border-radius: 20px; padding: 15px;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.05); max-width: 100%;
+  }
+  .paint-canvas svg { width: 100%; max-width: 380px; height: auto; display: block; }
+  .paint-canvas svg .paintable {
+    cursor: pointer; transition: all 0.3s; stroke: #333; stroke-width: 2;
+  }
+  .paint-canvas svg .paintable:hover { opacity: 0.85; }
+  .palette { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 15px; }
+  .paint-color {
+    width: 55px; height: 55px; border-radius: 50%; border: 4px solid white;
+    cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: all 0.15s; position: relative;
+  }
+  .paint-color:active { transform: scale(0.9); }
+  .paint-color.selected {
+    transform: scale(1.2); border-color: #333;
+    box-shadow: 0 0 0 3px white, 0 0 0 6px #333;
+  }
+  .paint-color.required::after {
+    content: '👇'; position: absolute; top: -32px; left: 50%;
+    transform: translateX(-50%); font-size: 1.6em; animation: bouncePoint 1s infinite;
+  }
+  @keyframes bouncePoint {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-6px); }
+  }
+
+  /* Inglês */
+  .english-audio-area { text-align: center; margin-bottom: 25px; }
+  .play-audio-btn {
+    background: linear-gradient(145deg, #ef5350, #d32f2f);
+    color: white; border: none; border-radius: 50px;
+    padding: 20px 35px; font-size: 1.5em; font-weight: bold;
+    cursor: pointer; box-shadow: 0 6px 0 #b71c1c;
+    display: inline-flex; align-items: center; gap: 12px;
+  }
+  .play-audio-btn:active { transform: translateY(3px); box-shadow: 0 3px 0 #b71c1c; }
+  .play-audio-btn .icon { font-size: 1.5em; animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
+  .english-word-hint { margin-top: 15px; font-size: 1.1em; color: #888; font-style: italic; }
+  .english-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 15px; max-width: 500px; margin: 0 auto;
+  }
+  .english-card {
+    background: white; border: 4px solid #ffebee;
+    border-radius: 20px; padding: 20px 10px; cursor: pointer;
+    transition: all 0.15s; display: flex; flex-direction: column;
+    align-items: center; gap: 8px; box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+  }
+  .english-card:hover { border-color: #ef5350; transform: translateY(-3px); }
+  .english-card:active { transform: scale(0.97); }
+  .english-card.correct-flash { background: #c8e6c9; border-color: #4caf50; animation: pop 0.5s; }
+  .english-card.wrong-flash { background: #ffcdd2; border-color: #f44336; animation: shake 0.5s; }
+  .english-emoji { font-size: 4em; line-height: 1; }
+  .english-label { font-size: 1.1em; font-weight: bold; color: #333; }
+
+  /* Feedback */
+  .feedback {
+    text-align: center; font-size: 1.5em; min-height: 50px;
+    margin-top: 20px; font-weight: bold;
+  }
+  .celebrate { animation: celebrate 0.6s; color: #ff4081; }
+  @keyframes celebrate {
+    0% { transform: scale(0); }
+    50% { transform: scale(1.3); }
+    100% { transform: scale(1); }
+  }
+  .next-btn {
+    display: block; margin: 20px auto 0; padding: 15px 40px;
+    background: #ff4081; color: white; border: none; border-radius: 30px;
+    font-size: 1.3em; font-weight: bold; cursor: pointer; box-shadow: 0 5px 0 #c2185b;
+  }
+  .next-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #c2185b; }
+
+  .score {
+    position: fixed; top: 20px; right: 20px; background: white;
+    padding: 10px 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-weight: bold; color: #ff4081; font-size: 1.2em; z-index: 100;
+  }
+
+  /* Ecrã de boas-vindas para activar áudio */
+  .welcome-screen {
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .welcome-screen .big-btn {
+    background: linear-gradient(145deg, #ff4081, #c2185b);
+    color: white; border: none;
+    padding: 25px 50px; border-radius: 40px;
+    font-size: 1.8em; font-weight: bold; cursor: pointer;
+    box-shadow: 0 8px 0 #880e4f;
+    animation: bounce 2s infinite;
+    margin-top: 20px;
+  }
+  .welcome-screen .big-btn:active { transform: translateY(5px); box-shadow: 0 3px 0 #880e4f; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.8em; }
+    .slot { width: 45px; height: 55px; font-size: 1.5em; }
+    .letter-btn { width: 50px; height: 50px; font-size: 1.4em; }
+    .menu-btn { font-size: 0.9em; padding: 12px 6px; border-radius: 14px; }
+    .math-item { font-size: 1.3em; }
+    .paint-color { width: 45px; height: 45px; }
+    .paint-instruction { font-size: 1.15em; }
+    .english-emoji { font-size: 3em; }
+    .play-audio-btn { font-size: 1.2em; padding: 16px 25px; }
+  }
+</style>
+</head>
+<body>
+<div class="score">⭐ <span id="score">0</span></div>
+<div class="container">
+  <h1>🌟 Jogos da Matilde 🌟</h1>
+  <p class="subtitle">Escolhe um jogo para começar!</p>
+
+  <div class="replay-btn-area" id="replayArea" style="display:none">
+    <button class="replay-instruction" onclick="replayInstruction()">
+      🔊 Ouvir outra vez
+    </button>
+    <button class="replay-instruction" onclick="showVoicePicker()" style="margin-left:8px;background:#fff;border-color:#2196f3;color:#2196f3;box-shadow:0 4px 0 #1565c0">
+      ⚙️ Voz
+    </button>
+  </div>
+
+  <div class="menu" id="menu">
+    <button class="menu-btn btn-name active" onclick="startGame('name', event)">✏️ Nome</button>
+    <button class="menu-btn btn-count" onclick="startGame('count', event)">🔢 Contar</button>
+    <button class="menu-btn btn-add" onclick="startGame('add', event)">➕ Somar</button>
+    <button class="menu-btn btn-sub" onclick="startGame('sub', event)">➖ Tirar</button>
+    <button class="menu-btn btn-colors" onclick="startGame('colors', event)">🎨 Cores</button>
+    <button class="menu-btn btn-shapes" onclick="startGame('shapes', event)">⭐ Formas</button>
+    <button class="menu-btn btn-paint" onclick="startGame('paint', event)">🖌️ Pintar</button>
+    <button class="menu-btn btn-english" onclick="startGame('english', event)">🇬🇧 Inglês</button>
+  </div>
+
+  <div class="game-area" id="gameArea">
+    <div class="welcome-screen">
+      <div style="font-size:5em">👋</div>
+      <h2 style="color:#ff4081;font-size:2em;margin-top:15px">Olá Matilde!</h2>
+      <p style="font-size:1.3em;margin-top:15px;color:#555">Carrega no botão para começar os jogos!</p>
+      <button class="big-btn" onclick="startApp()">🎮 Começar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal seletor de voz -->
+<div id="voicePicker" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;
+     background:rgba(0,0,0,0.6);z-index:1000;align-items:center;justify-content:center;
+     padding:20px;overflow-y:auto">
+  <div style="background:white;border-radius:20px;padding:25px;max-width:500px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 10px 40px rgba(0,0,0,0.3)">
+    <div id="voicePickerContent"></div>
+  </div>
+</div>
+
+<script>
+let score = 0;
+let lastInstruction = '';
+let audioReady = false;
+
+// ==================== ÁUDIO ====================
+let ptVoice = null;
+let enVoice = null;
+let allPtVoices = [];
+let noPortugueseVoice = false;
+
+function loadVoices() {
+  const voices = window.speechSynthesis.getVoices();
+
+  // APENAS vozes de Portugal (pt-PT). Recusamos pt-BR.
+  allPtVoices = voices.filter(v =>
+    v.lang === 'pt-PT' ||
+    v.lang === 'pt_PT' ||
+    v.lang.toLowerCase().replace('_', '-') === 'pt-pt'
+  );
+
+  // Identificar vozes pt-BR para podermos filtrar conscientemente
+  // (algumas vozes vêm marcadas como 'pt' genérico mas são brasileiras)
+  if (allPtVoices.length === 0) {
+    // Procurar vozes pt genérico mas excluir as que parecem ser brasileiras pelo nome
+    const genericPt = voices.filter(v => {
+      const lang = v.lang.toLowerCase();
+      const name = v.name.toLowerCase();
+      const isBrazilian = lang.includes('br') || lang === 'pt-br' || lang === 'pt_br' ||
+                          name.includes('brasil') || name.includes('brazil') ||
+                          name.includes('luciana') || name.includes('felipe') ||
+                          name.includes('vitória') || name.includes('vitoria') ||
+                          name.includes('camila') || name.includes('francisca');
+      return lang.startsWith('pt') && !isBrazilian;
+    });
+    allPtVoices = genericPt;
+  }
+
+  // Preferir vozes de melhor qualidade (geralmente as que têm "Premium", "Enhanced" no nome)
+  allPtVoices.sort((a, b) => {
+    const aQ = /enhanced|premium|natural|neural/i.test(a.name) ? 1 : 0;
+    const bQ = /enhanced|premium|natural|neural/i.test(b.name) ? 1 : 0;
+    return bQ - aQ;
+  });
+
+  // Verificar se há preferência guardada
+  const savedVoice = localStorage.getItem('matilde_voice');
+  if (savedVoice) {
+    const found = allPtVoices.find(v => v.name === savedVoice);
+    if (found) ptVoice = found;
+  }
+  if (!ptVoice && allPtVoices.length > 0) {
+    ptVoice = allPtVoices[0];
+  }
+
+  noPortugueseVoice = allPtVoices.length === 0;
+
+  enVoice = voices.find(v => v.lang === 'en-US') ||
+            voices.find(v => v.lang === 'en-GB') ||
+            voices.find(v => v.lang.startsWith('en')) ||
+            null;
+}
+
+if ('speechSynthesis' in window) {
+  loadVoices();
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+
+function speak(text, lang = 'pt-PT', remember = true) {
+  if (!('speechSynthesis' in window)) return;
+  if (!text) return;
+  try {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.rate = lang.startsWith('pt') ? 0.92 : 0.8;
+    utter.pitch = 1.1;
+
+    if (lang.startsWith('pt')) {
+      if (ptVoice) {
+        utter.voice = ptVoice;
+        utter.lang = ptVoice.lang;
+      } else {
+        utter.lang = 'pt-PT';
+      }
+    } else {
+      if (enVoice) utter.voice = enVoice;
+      utter.lang = lang;
+    }
+
+    window.speechSynthesis.speak(utter);
+    if (remember && lang.startsWith('pt')) {
+      lastInstruction = text;
+      document.getElementById('replayArea').style.display = 'block';
+    }
+  } catch(e) {}
+}
+
+function showVoicePicker() {
+  // Recarregar vozes ao abrir
+  loadVoices();
+  const voices = window.speechSynthesis.getVoices();
+  const allPt = voices.filter(v => v.lang.toLowerCase().startsWith('pt'));
+
+  const list = allPt.length > 0
+    ? allPt.map(v => {
+        const isPT = v.lang === 'pt-PT' || v.lang === 'pt_PT';
+        const isSelected = ptVoice && v.name === ptVoice.name;
+        return `
+          <div onclick="selectVoice('${v.name.replace(/'/g, "\\'")}')"
+               style="padding:12px 15px;margin:6px 0;border-radius:12px;cursor:pointer;
+                      background:${isSelected ? '#ff4081' : (isPT ? '#e8f5e9' : '#fff3e0')};
+                      color:${isSelected ? 'white' : '#333'};
+                      border:2px solid ${isSelected ? '#c2185b' : '#ddd'};">
+            <strong>${v.name}</strong>
+            <span style="font-size:0.85em;opacity:0.8"> · ${v.lang} ${isPT ? '🇵🇹' : '🇧🇷'}</span>
+            ${isSelected ? ' ✓' : ''}
+          </div>
+        `;
+      }).join('')
+    : '<p style="color:#d32f2f">⚠️ Não há vozes portuguesas instaladas neste dispositivo.</p>';
+
+  document.getElementById('voicePickerContent').innerHTML = `
+    <h2 style="color:#ff4081;text-align:center;margin-bottom:15px">🔊 Escolher voz</h2>
+    <p style="text-align:center;color:#666;margin-bottom:15px;font-size:0.95em">
+      As vozes verdes 🇵🇹 são de Portugal. As laranjas 🇧🇷 são do Brasil.
+    </p>
+    ${list}
+    <button onclick="closeVoicePicker()"
+            style="display:block;margin:20px auto 0;padding:12px 30px;background:#ff4081;
+                   color:white;border:none;border-radius:25px;font-size:1.1em;
+                   font-weight:bold;cursor:pointer;box-shadow:0 4px 0 #c2185b">
+      Fechar
+    </button>
+  `;
+  document.getElementById('voicePicker').style.display = 'flex';
+}
+
+function selectVoice(name) {
+  const voices = window.speechSynthesis.getVoices();
+  const v = voices.find(x => x.name === name);
+  if (v) {
+    ptVoice = v;
+    localStorage.setItem('matilde_voice', v.name);
+    speak('Olá! Esta é a minha voz. Vamos brincar?', 'pt-PT', false);
+    setTimeout(showVoicePicker, 100); // refresh para mostrar a selecção
+  }
+}
+
+function closeVoicePicker() {
+  document.getElementById('voicePicker').style.display = 'none';
+}
+
+function replayInstruction() {
+  if (lastInstruction) speak(lastInstruction, 'pt-PT', false);
+}
+
+function playTone(freq, duration, type='sine') {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + duration);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(); osc.stop(ctx.currentTime + duration);
+  } catch(e) {}
+}
+const sounds = {
+  correct: () => playTone(523, 0.1, 'sine'),
+  wrong: () => playTone(200, 0.2, 'sawtooth'),
+  win: () => { playTone(523, 0.1); setTimeout(() => playTone(659, 0.1), 100); setTimeout(() => playTone(784, 0.2), 200); }
+};
+function updateScore(pts) { score += pts; document.getElementById('score').textContent = score; }
+
+// Iniciar a app (necessário para activar áudio em alguns browsers)
+function startApp() {
+  audioReady = true;
+  // Recarregar vozes (algumas browsers só carregam após interação)
+  loadVoices();
+  // "Despertar" o motor de fala
+  speak('Olá Matilde! Vamos brincar?', 'pt-PT', false);
+
+  // Após pequeno atraso, verificar se há voz portuguesa e avisar se necessário
+  setTimeout(() => {
+    loadVoices();
+    if (noPortugueseVoice) {
+      showNoVoiceWarning();
+    } else {
+      // Mostrar qual voz está a ser usada (para o utilizador poder mudar se quiser)
+      document.getElementById('replayArea').style.display = 'block';
+      renderNameGame();
+    }
+  }, 300);
+}
+
+function showNoVoiceWarning() {
+  const voices = window.speechSynthesis.getVoices();
+  const anyPt = voices.filter(v => v.lang.toLowerCase().startsWith('pt'));
+
+  let helpHtml = '';
+  if (anyPt.length > 0) {
+    helpHtml = `
+      <p style="margin-top:15px;font-size:1.05em;color:#555">
+        Há vozes portuguesas do <strong>Brasil</strong> disponíveis, mas não de Portugal.
+        Podes usar uma delas mesmo assim (vai ter sotaque brasileiro):
+      </p>
+      <button onclick="useBrazilianAnyway()" style="margin-top:10px;padding:12px 25px;background:#ff9800;color:white;border:none;border-radius:20px;font-size:1em;font-weight:bold;cursor:pointer;box-shadow:0 4px 0 #ef6c00">
+        Usar voz brasileira na mesma
+      </button>
+    `;
+  }
+
+  document.getElementById('gameArea').innerHTML = `
+    <div style="padding:25px 15px;text-align:left">
+      <h2 style="color:#d32f2f;text-align:center;font-size:1.6em">⚠️ Sem voz portuguesa de Portugal</h2>
+      <p style="margin-top:15px;font-size:1.1em;color:#333;text-align:center">
+        Este dispositivo não tem nenhuma voz portuguesa de Portugal (pt-PT) instalada.
+      </p>
+      <p style="margin-top:20px;font-size:1em;color:#555">
+        <strong>Como resolver:</strong>
+      </p>
+      <div style="background:#e3f2fd;padding:15px;border-radius:12px;margin-top:10px;font-size:0.95em;line-height:1.6">
+        <strong>📱 No iPhone / iPad:</strong><br>
+        Definições → Acessibilidade → Conteúdo Falado → Vozes → Português → Português (Portugal). Descarrega "Joana" ou "Catarina".
+      </div>
+      <div style="background:#fff3e0;padding:15px;border-radius:12px;margin-top:10px;font-size:0.95em;line-height:1.6">
+        <strong>🤖 No Android:</strong><br>
+        Definições → Acessibilidade → Saída de texto para voz → Motor preferido → Definições → Instalar dados de voz → Português (Portugal).
+      </div>
+      <div style="background:#f3e5f5;padding:15px;border-radius:12px;margin-top:10px;font-size:0.95em;line-height:1.6">
+        <strong>💻 No computador:</strong><br>
+        Tenta abrir no <strong>Microsoft Edge</strong> ou <strong>Safari</strong> (Mac) — geralmente têm vozes pt-PT incluídas. O Chrome no Windows pode não ter sem instalar pacote de idioma.
+      </div>
+      ${helpHtml}
+      <button onclick="loadVoices(); startApp()" style="display:block;margin:25px auto 0;padding:14px 35px;background:#4caf50;color:white;border:none;border-radius:25px;font-size:1.15em;font-weight:bold;cursor:pointer;box-shadow:0 5px 0 #2e7d32">
+        🔄 Já instalei, tentar outra vez
+      </button>
+    </div>
+  `;
+}
+
+function useBrazilianAnyway() {
+  const voices = window.speechSynthesis.getVoices();
+  const ptBr = voices.find(v => v.lang === 'pt-BR' || v.lang === 'pt_BR') ||
+               voices.find(v => v.lang.toLowerCase().startsWith('pt'));
+  if (ptBr) {
+    ptVoice = ptBr;
+    localStorage.setItem('matilde_voice', ptBr.name);
+    noPortugueseVoice = false;
+  }
+  document.getElementById('replayArea').style.display = 'block';
+  renderNameGame();
+}
+
+function startGame(game, ev) {
+  if (!audioReady) {
+    audioReady = true;
+    speak('', 'pt-PT', false);
+  }
+  document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+  if (ev) ev.target.classList.add('active');
+  if (game === 'name') renderNameGame();
+  if (game === 'count') renderCountGame();
+  if (game === 'add') renderMathGame('add');
+  if (game === 'sub') renderMathGame('sub');
+  if (game === 'colors') renderColorsGame();
+  if (game === 'shapes') renderShapesGame();
+  if (game === 'paint') renderPaintGame();
+  if (game === 'english') renderEnglishGame();
+}
+
+// ========== NOME ==========
+const NAME = 'MATILDE';
+const NAME_LETTERS_PT = { M: 'eme', A: 'á', T: 'tê', I: 'i', L: 'éle', D: 'dê', E: 'é' };
+let nameProgress = 0;
+let nameLetters = [];
+
+function renderNameGame() {
+  nameProgress = 0;
+  const extras = ['B', 'P', 'R', 'O', 'N'];
+  nameLetters = [...NAME.split(''), ...extras.slice(0, 3)].sort(() => Math.random() - 0.5);
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title">✏️ Escreve o teu nome!</h2>
+    <p class="instruction">Toca nas letras pela ordem certa para escrever <strong style="color:#ff4081">MATILDE</strong></p>
+    <div class="name-slots" id="nameSlots">
+      ${NAME.split('').map((l, i) => `<div class="slot" id="slot-${i}"></div>`).join('')}
+    </div>
+    <div class="letters-pool">
+      ${nameLetters.map((l, i) => `<button class="letter-btn" id="letter-${i}" onclick="pickLetter('${l}', ${i})">${l}</button>`).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+  highlightNextSlot();
+  setTimeout(() => speak(`Vamos escrever o teu nome! Procura a letra ${NAME_LETTERS_PT[NAME[0]]}`), 300);
+}
+
+function highlightNextSlot() {
+  document.querySelectorAll('.slot').forEach(s => s.classList.remove('next-hint'));
+  const next = document.getElementById(`slot-${nameProgress}`);
+  if (next) next.classList.add('next-hint');
+}
+
+function pickLetter(letter, btnIdx) {
+  const expected = NAME[nameProgress];
+  const slot = document.getElementById(`slot-${nameProgress}`);
+  const btn = document.getElementById(`letter-${btnIdx}`);
+
+  if (letter === expected) {
+    slot.textContent = letter;
+    slot.classList.add('filled', 'correct');
+    slot.classList.remove('next-hint');
+    btn.classList.add('used');
+    nameProgress++;
+    sounds.correct();
+    updateScore(1);
+
+    if (nameProgress === NAME.length) {
+      sounds.win();
+      const fb = document.getElementById('feedback');
+      fb.innerHTML = `<span class="celebrate">🎉 Boa Matilde! Conseguiste! 🎉</span>`;
+      updateScore(5);
+      speak('Boa Matilde! Conseguiste escrever o teu nome!');
+      setTimeout(() => {
+        fb.innerHTML += `<br><button class="next-btn" onclick="renderNameGame()">Jogar outra vez! 🔄</button>`;
+      }, 800);
+    } else {
+      highlightNextSlot();
+      speak(`Boa! Agora procura a letra ${NAME_LETTERS_PT[NAME[nameProgress]]}`);
+    }
+  } else {
+    slot.classList.add('wrong');
+    sounds.wrong();
+    setTimeout(() => slot.classList.remove('wrong'), 500);
+    speak(`Essa não é. Procura a letra ${NAME_LETTERS_PT[expected]}`);
+  }
+}
+
+// ========== CONTAR ==========
+const countEmojis = [
+  { e: '🐶', n: 'cães' }, { e: '🦋', n: 'borboletas' }, { e: '🌸', n: 'flores' },
+  { e: '🍎', n: 'maçãs' }, { e: '⭐', n: 'estrelas' }, { e: '🐱', n: 'gatos' },
+  { e: '🐰', n: 'coelhos' }, { e: '🐝', n: 'abelhas' }, { e: '🌈', n: 'arco-íris' },
+  { e: '🎈', n: 'balões' }
+];
+let currentCount = 0;
+
+function renderCountGame() {
+  const count = Math.floor(Math.random() * 9) + 1;
+  currentCount = count;
+  const item = countEmojis[Math.floor(Math.random() * countEmojis.length)];
+  const options = generateNumberOptions(count, 1, 10);
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title">🔢 Quantos vês?</h2>
+    <p class="instruction">Conta os ${item.e} e escolhe o número certo!</p>
+    <div class="count-area">
+      ${Array(count).fill(0).map((_, i) => `<span class="count-item" style="animation-delay:${i*0.1}s">${item.e}</span>`).join('')}
+    </div>
+    <div class="number-choices">
+      ${options.map(n => `<button class="number-btn" onclick="checkCount(${n})">${n}</button>`).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+  setTimeout(() => speak(`Conta os ${item.n} e escolhe o número certo!`), 300);
+}
+
+function generateNumberOptions(correct, min, max) {
+  const opts = new Set([correct]);
+  while (opts.size < 3) {
+    const r = Math.max(min, Math.min(max, correct + Math.floor(Math.random() * 5) - 2));
+    if (r !== correct) opts.add(r);
+  }
+  return [...opts].sort(() => Math.random() - 0.5);
+}
+
+function checkCount(n) {
+  const fb = document.getElementById('feedback');
+  if (n === currentCount) {
+    sounds.win();
+    fb.innerHTML = `<span class="celebrate">🎉 Certo! Eram ${n}! ⭐</span>`;
+    updateScore(3);
+    speak(`Certo! Eram ${numToWord(n)}!`, 'pt-PT', false);
+    setTimeout(renderCountGame, 2000);
+  } else {
+    sounds.wrong();
+    fb.textContent = `Quase! Tenta contar outra vez 🤔`;
+    speak('Quase! Tenta contar outra vez!', 'pt-PT', false);
+    setTimeout(() => fb.textContent = '', 1800);
+  }
+}
+
+function numToWord(n) {
+  const words = ['zero', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove', 'dez'];
+  return words[n] || n.toString();
+}
+
+// ========== MATEMÁTICA ==========
+const mathEmojis = [
+  { e: '🍎', n: 'maçãs' }, { e: '🍓', n: 'morangos' }, { e: '🌟', n: 'estrelas' },
+  { e: '🐝', n: 'abelhas' }, { e: '🦋', n: 'borboletas' }, { e: '🌸', n: 'flores' },
+  { e: '🎈', n: 'balões' }, { e: '🐞', n: 'joaninhas' }
+];
+let mathAnswer = 0;
+let mathMode = 'add';
+
+function renderMathGame(mode) {
+  mathMode = mode;
+  let a, b, op, visualHtml, title, instructionText, btnClass;
+
+  if (mode === 'add') {
+    a = Math.floor(Math.random() * 5) + 1;
+    b = Math.floor(Math.random() * 5) + 1;
+    if (a + b > 10) b = 10 - a;
+    if (b < 1) b = 1;
+    mathAnswer = a + b;
+    op = '+';
+    title = '➕ Vamos Somar!';
+    btnClass = 'add-btn';
+  } else {
+    a = Math.floor(Math.random() * 7) + 3;
+    b = Math.floor(Math.random() * (a - 1)) + 1;
+    mathAnswer = a - b;
+    op = '−';
+    title = '➖ Vamos Tirar!';
+    btnClass = 'sub-btn';
+  }
+
+  const item = mathEmojis[Math.floor(Math.random() * mathEmojis.length)];
+  const options = generateNumberOptions(mathAnswer, 0, 10);
+
+  if (mode === 'add') {
+    instructionText = `Tens ${numToWord(a)} ${item.n}, juntas mais ${numToWord(b)}. Quantos ${item.n} ficam ao todo?`;
+    visualHtml = `
+      <div class="math-group">${Array(a).fill(0).map(() => `<span class="math-item">${item.e}</span>`).join('')}</div>
+      <span class="math-sign">➕</span>
+      <div class="math-group">${Array(b).fill(0).map(() => `<span class="math-item">${item.e}</span>`).join('')}</div>
+      <span class="math-sign">=</span>
+      <span style="font-size:2em;color:#9c27b0;font-weight:bold">?</span>
+    `;
+  } else {
+    instructionText = `Tens ${numToWord(a)} ${item.n} e tiras ${numToWord(b)}. Quantos ${item.n} ficam?`;
+    visualHtml = `
+      <div class="math-group sub-style">
+        ${Array(a).fill(0).map((_, i) => `<span class="math-item" style="${i < b ? 'opacity:0.2;text-decoration:line-through;filter:grayscale(1);' : ''}">${item.e}</span>`).join('')}
+      </div>
+      <span class="math-sign" style="font-size:1em;color:#5e35b1">(tira ${b})</span>
+      <span class="math-sign">=</span>
+      <span style="font-size:2em;color:#5e35b1;font-weight:bold">?</span>
+    `;
+  }
+
+  const mainColor = mode === 'add' ? '#9c27b0' : '#5e35b1';
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:${mainColor}">${title}</h2>
+    <p class="instruction">${instructionText}</p>
+    <div class="math-equation" style="font-size:1.3em;color:${mainColor}">
+      <span style="font-size:2em">${a}</span>
+      <span style="font-size:1.8em">${op}</span>
+      <span style="font-size:2em">${b}</span>
+      <span style="font-size:1.8em">=</span>
+      <span style="font-size:2em">?</span>
+    </div>
+    <div class="math-equation">${visualHtml}</div>
+    <div class="math-choices">
+      ${options.map(n => `<button class="math-btn ${btnClass}" onclick="checkMath(${n})">${n}</button>`).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+  setTimeout(() => speak(instructionText), 300);
+}
+
+function checkMath(n) {
+  const fb = document.getElementById('feedback');
+  if (n === mathAnswer) {
+    sounds.win();
+    fb.innerHTML = `<span class="celebrate">🎉 Certinho! É ${n}! 🌟</span>`;
+    updateScore(5);
+    speak(`Certinho! A resposta é ${numToWord(n)}!`, 'pt-PT', false);
+    setTimeout(() => renderMathGame(mathMode), 2200);
+  } else {
+    sounds.wrong();
+    fb.textContent = `Quase! Conta os desenhos outra vez 🤔`;
+    speak('Quase! Conta os desenhos outra vez!', 'pt-PT', false);
+    setTimeout(() => fb.textContent = '', 1800);
+  }
+}
+
+// ========== CORES ==========
+const colors = [
+  { name: 'VERMELHO', say: 'vermelho', hex: '#e53935' },
+  { name: 'AZUL', say: 'azul', hex: '#1e88e5' },
+  { name: 'AMARELO', say: 'amarelo', hex: '#fdd835' },
+  { name: 'VERDE', say: 'verde', hex: '#43a047' },
+  { name: 'COR-DE-ROSA', say: 'cor de rosa', hex: '#ec407a' },
+  { name: 'LARANJA', say: 'laranja', hex: '#fb8c00' },
+  { name: 'ROXO', say: 'roxo', hex: '#8e24aa' },
+  { name: 'CASTANHO', say: 'castanho', hex: '#6d4c41' }
+];
+let targetColor;
+
+function renderColorsGame() {
+  targetColor = colors[Math.floor(Math.random() * colors.length)];
+  const choices = [targetColor];
+  while (choices.length < 4) {
+    const c = colors[Math.floor(Math.random() * colors.length)];
+    if (!choices.includes(c)) choices.push(c);
+  }
+  choices.sort(() => Math.random() - 0.5);
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title">🎨 Encontra a Cor!</h2>
+    <div class="color-target" style="background:${targetColor.hex}">Toca em ${targetColor.name}</div>
+    <div class="color-choices">
+      ${choices.map(c => `<button class="color-btn" style="background:${c.hex}" onclick="checkColor('${c.name}','${c.say}')"></button>`).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+  setTimeout(() => speak(`Encontra a cor ${targetColor.say}`), 300);
+}
+
+function checkColor(name, say) {
+  const fb = document.getElementById('feedback');
+  if (name === targetColor.name) {
+    sounds.win();
+    fb.innerHTML = `<span class="celebrate">🎉 Boa! Era ${name}! 🌈</span>`;
+    updateScore(3);
+    speak(`Boa! Era ${targetColor.say}!`, 'pt-PT', false);
+    setTimeout(renderColorsGame, 2000);
+  } else {
+    sounds.wrong();
+    fb.textContent = `Tenta outra vez! 💪`;
+    speak(`Essa é ${say}. Procura ${targetColor.say}!`, 'pt-PT', false);
+    setTimeout(() => fb.textContent = '', 1800);
+  }
+}
+
+// ========== FORMAS ==========
+const shapes = [
+  { name: 'CÍRCULO', say: 'círculo', svg: '<circle cx="40" cy="40" r="35" fill="#ff4081"/>' },
+  { name: 'QUADRADO', say: 'quadrado', svg: '<rect x="5" y="5" width="70" height="70" fill="#2196f3"/>' },
+  { name: 'TRIÂNGULO', say: 'triângulo', svg: '<polygon points="40,5 75,72 5,72" fill="#4caf50"/>' },
+  { name: 'ESTRELA', say: 'estrela', svg: '<polygon points="40,5 49,30 75,30 54,47 62,72 40,57 18,72 26,47 5,30 31,30" fill="#ffc107"/>' },
+  { name: 'CORAÇÃO', say: 'coração', svg: '<path d="M40,72 C40,72 8,50 8,28 C8,16 18,8 28,8 C34,8 40,14 40,20 C40,14 46,8 52,8 C62,8 72,16 72,28 C72,50 40,72 40,72 Z" fill="#e91e63"/>' },
+  { name: 'LOSANGO', say: 'losango', svg: '<polygon points="40,5 75,40 40,75 5,40" fill="#9c27b0"/>' }
+];
+let targetShape;
+
+function renderShapesGame() {
+  targetShape = shapes[Math.floor(Math.random() * shapes.length)];
+  const choices = [targetShape];
+  while (choices.length < 4) {
+    const s = shapes[Math.floor(Math.random() * shapes.length)];
+    if (!choices.includes(s)) choices.push(s);
+  }
+  choices.sort(() => Math.random() - 0.5);
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title">⭐ Encontra a Forma!</h2>
+    <div class="shape-target">Toca no ${targetShape.name}</div>
+    <div class="shapes-grid">
+      ${choices.map(s => `<button class="shape-btn" onclick="checkShape('${s.name}','${s.say}')"><svg viewBox="0 0 80 80">${s.svg}</svg></button>`).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+  setTimeout(() => speak(`Encontra o ${targetShape.say}`), 300);
+}
+
+function checkShape(name, say) {
+  const fb = document.getElementById('feedback');
+  if (name === targetShape.name) {
+    sounds.win();
+    fb.innerHTML = `<span class="celebrate">🎉 Muito bem! Era ${name}! ⭐</span>`;
+    updateScore(3);
+    speak(`Muito bem! Era ${targetShape.say}!`, 'pt-PT', false);
+    setTimeout(renderShapesGame, 2000);
+  } else {
+    sounds.wrong();
+    fb.textContent = `Quase! Tenta outra vez 🤔`;
+    speak(`Essa é ${say}. Procura ${targetShape.say}!`, 'pt-PT', false);
+    setTimeout(() => fb.textContent = '', 1800);
+  }
+}
+
+// ========== PINTAR ==========
+const paintColors = [
+  { name: 'vermelho', hex: '#e53935' }, { name: 'azul', hex: '#1e88e5' },
+  { name: 'amarelo', hex: '#fdd835' }, { name: 'verde', hex: '#43a047' },
+  { name: 'cor-de-rosa', say: 'cor de rosa', hex: '#ec407a' }, { name: 'laranja', hex: '#fb8c00' },
+  { name: 'roxo', hex: '#8e24aa' }, { name: 'castanho', hex: '#6d4c41' }
+];
+
+const paintDrawings = [
+  {
+    name: 'A Casa', viewBox: '0 0 400 400',
+    parts: [
+      { id: 'sky', label: 'o céu', color: 'azul', svg: '<rect class="paintable" data-id="sky" x="0" y="0" width="400" height="280" fill="white"/>' },
+      { id: 'grass', label: 'a relva', color: 'verde', svg: '<rect class="paintable" data-id="grass" x="0" y="280" width="400" height="120" fill="white"/>' },
+      { id: 'sun', label: 'o sol', color: 'amarelo', svg: '<circle class="paintable" data-id="sun" cx="330" cy="60" r="30" fill="white"/>' },
+      { id: 'wall', label: 'a parede da casa', color: 'amarelo', svg: '<rect class="paintable" data-id="wall" x="100" y="180" width="200" height="160" fill="white"/>' },
+      { id: 'roof', label: 'o telhado', color: 'vermelho', svg: '<polygon class="paintable" data-id="roof" points="100,180 300,180 200,100" fill="white"/>' },
+      { id: 'door', label: 'a porta', color: 'castanho', svg: '<rect class="paintable" data-id="door" x="175" y="260" width="50" height="80" fill="white"/>' },
+      { id: 'window', label: 'a janela', color: 'azul', svg: '<rect class="paintable" data-id="window" x="120" y="210" width="40" height="40" fill="white"/>' }
+    ]
+  },
+  {
+    name: 'A Flor', viewBox: '0 0 400 400',
+    parts: [
+      { id: 'bg', label: 'o fundo', color: 'azul', svg: '<rect class="paintable" data-id="bg" x="0" y="0" width="400" height="400" fill="white"/>' },
+      { id: 'stem', label: 'o caule', color: 'verde', svg: '<rect class="paintable" data-id="stem" x="190" y="200" width="20" height="170" fill="white"/>' },
+      { id: 'leaf', label: 'a folha', color: 'verde', svg: '<ellipse class="paintable" data-id="leaf" cx="240" cy="270" rx="40" ry="20" transform="rotate(20 240 270)" fill="white"/>' },
+      { id: 'petal1', label: 'a pétala de cima', color: 'cor-de-rosa', svg: '<circle class="paintable" data-id="petal1" cx="200" cy="110" r="45" fill="white"/>' },
+      { id: 'petal2', label: 'a pétala da esquerda', color: 'cor-de-rosa', svg: '<circle class="paintable" data-id="petal2" cx="135" cy="170" r="45" fill="white"/>' },
+      { id: 'petal3', label: 'a pétala da direita', color: 'cor-de-rosa', svg: '<circle class="paintable" data-id="petal3" cx="265" cy="170" r="45" fill="white"/>' },
+      { id: 'petal4', label: 'a pétala de baixo', color: 'cor-de-rosa', svg: '<circle class="paintable" data-id="petal4" cx="200" cy="230" r="45" fill="white"/>' },
+      { id: 'center', label: 'o meio da flor', color: 'amarelo', svg: '<circle class="paintable" data-id="center" cx="200" cy="170" r="30" fill="white"/>' }
+    ]
+  },
+  {
+    name: 'A Borboleta', viewBox: '0 0 400 400',
+    parts: [
+      { id: 'bg', label: 'o fundo', color: 'verde', svg: '<rect class="paintable" data-id="bg" x="0" y="0" width="400" height="400" fill="white"/>' },
+      { id: 'wingTL', label: 'a asa de cima esquerda', color: 'roxo', svg: '<ellipse class="paintable" data-id="wingTL" cx="130" cy="150" rx="70" ry="60" fill="white"/>' },
+      { id: 'wingTR', label: 'a asa de cima direita', color: 'roxo', svg: '<ellipse class="paintable" data-id="wingTR" cx="270" cy="150" rx="70" ry="60" fill="white"/>' },
+      { id: 'wingBL', label: 'a asa de baixo esquerda', color: 'laranja', svg: '<ellipse class="paintable" data-id="wingBL" cx="140" cy="260" rx="55" ry="50" fill="white"/>' },
+      { id: 'wingBR', label: 'a asa de baixo direita', color: 'laranja', svg: '<ellipse class="paintable" data-id="wingBR" cx="260" cy="260" rx="55" ry="50" fill="white"/>' },
+      { id: 'body', label: 'o corpo', color: 'castanho', svg: '<ellipse class="paintable" data-id="body" cx="200" cy="200" rx="12" ry="80" fill="white"/>' },
+      { id: 'spot1', label: 'a bolinha da asa esquerda', color: 'amarelo', svg: '<circle class="paintable" data-id="spot1" cx="130" cy="150" r="15" fill="white"/>' },
+      { id: 'spot2', label: 'a bolinha da asa direita', color: 'amarelo', svg: '<circle class="paintable" data-id="spot2" cx="270" cy="150" r="15" fill="white"/>' }
+    ]
+  },
+  {
+    name: 'O Peixinho', viewBox: '0 0 400 400',
+    parts: [
+      { id: 'water', label: 'a água', color: 'azul', svg: '<rect class="paintable" data-id="water" x="0" y="0" width="400" height="400" fill="white"/>' },
+      { id: 'body', label: 'o corpo do peixe', color: 'laranja', svg: '<ellipse class="paintable" data-id="body" cx="190" cy="200" rx="110" ry="65" fill="white"/>' },
+      { id: 'tail', label: 'a cauda', color: 'vermelho', svg: '<polygon class="paintable" data-id="tail" points="290,200 360,140 360,260" fill="white"/>' },
+      { id: 'fin', label: 'a barbatana', color: 'amarelo', svg: '<polygon class="paintable" data-id="fin" points="180,135 220,135 200,90" fill="white"/>' },
+      { id: 'eye', label: 'o olho', color: 'castanho', svg: '<circle class="paintable" data-id="eye" cx="140" cy="185" r="12" fill="white"/>' },
+      { id: 'bubble1', label: 'a bolha grande', color: 'cor-de-rosa', svg: '<circle class="paintable" data-id="bubble1" cx="320" cy="80" r="20" fill="white"/>' },
+      { id: 'bubble2', label: 'a bolha pequena', color: 'cor-de-rosa', svg: '<circle class="paintable" data-id="bubble2" cx="350" cy="130" r="12" fill="white"/>' }
+    ]
+  }
+];
+
+let currentDrawing = null;
+let paintProgress = 0;
+let selectedColor = null;
+
+function colorToSay(name) {
+  return name === 'cor-de-rosa' ? 'cor de rosa' : name;
+}
+
+function renderPaintGame() {
+  currentDrawing = paintDrawings[Math.floor(Math.random() * paintDrawings.length)];
+  paintProgress = 0;
+  selectedColor = null;
+  drawPaintScreen();
+  setTimeout(() => {
+    const part = currentDrawing.parts[0];
+    speak(`Vamos pintar ${currentDrawing.name}! Primeiro escolhe a cor ${colorToSay(part.color)} para pintar ${part.label}`);
+  }, 400);
+}
+
+function drawPaintScreen(message, sayMessage) {
+  const draw = currentDrawing;
+  const currentPart = draw.parts[paintProgress];
+  const done = paintProgress >= draw.parts.length;
+  const colorEmoji = { vermelho:'🔴', azul:'🔵', amarelo:'🟡', verde:'🟢', 'cor-de-rosa':'🌸', laranja:'🟠', roxo:'🟣', castanho:'🟤' };
+
+  let instructionHtml;
+  if (message) {
+    instructionHtml = message;
+  } else if (done) {
+    instructionHtml = `<span class="celebrate">🎉 Acabaste ${draw.name}! Está linda! 🎉</span>`;
+  } else if (!selectedColor) {
+    instructionHtml = `Escolhe a cor <strong>${currentPart.color}</strong> ${colorEmoji[currentPart.color] || ''} para pintar <strong>${currentPart.label}</strong>`;
+  } else {
+    instructionHtml = `Agora toca em <strong>${currentPart.label}</strong> no desenho! 👆`;
+  }
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title">🖌️ Pinta — ${draw.name}</h2>
+    <div class="paint-instruction">${instructionHtml}</div>
+    <div class="paint-canvas-wrap">
+      <div class="paint-canvas">
+        <svg viewBox="${draw.viewBox}" id="paintSvg">
+          ${draw.parts.map(p => p.svg).join('')}
+        </svg>
+      </div>
+    </div>
+    <div class="palette">
+      ${paintColors.map(c => `
+        <div class="paint-color ${!done && !selectedColor && c.name === currentPart.color ? 'required' : ''} ${selectedColor === c.name ? 'selected' : ''}"
+             style="background:${c.hex}" data-color="${c.name}"
+             onclick="pickPaint('${c.name}')" title="${c.name}"></div>
+      `).join('')}
+    </div>
+    ${done ? `<button class="next-btn" onclick="renderPaintGame()">Pintar outro desenho! 🎨</button>` : ''}
+  `;
+
+  for (let i = 0; i < paintProgress; i++) {
+    const p = draw.parts[i];
+    const colorHex = paintColors.find(c => c.name === p.color).hex;
+    const el = document.querySelector(`#paintSvg [data-id="${p.id}"]`);
+    if (el) el.setAttribute('fill', colorHex);
+  }
+
+  document.querySelectorAll('#paintSvg .paintable').forEach(el => {
+    el.addEventListener('click', () => {
+      const id = el.getAttribute('data-id');
+      tryPaint(id, el);
+    });
+  });
+
+  if (sayMessage) speak(sayMessage);
+}
+
+function pickPaint(name) {
+  const expected = currentDrawing.parts[paintProgress];
+  if (!expected) return;
+  selectedColor = name;
+  if (name === expected.color) {
+    sounds.correct();
+    drawPaintScreen(null, `Boa! Agora toca em ${expected.label} no desenho!`);
+  } else {
+    sounds.wrong();
+    drawPaintScreen(`Hmm, essa não é a cor certa. Procura <strong>${expected.color}</strong>!`);
+    speak(`Essa é ${colorToSay(name)}. Procura a cor ${colorToSay(expected.color)}!`, 'pt-PT', false);
+    selectedColor = null;
+    setTimeout(() => drawPaintScreen(), 2000);
+  }
+}
+
+function tryPaint(partId, el) {
+  if (!selectedColor) {
+    drawPaintScreen(`👆 Primeiro escolhe uma cor lá em baixo!`);
+    speak('Primeiro escolhe uma cor lá em baixo!', 'pt-PT', false);
+    setTimeout(drawPaintScreen, 1800);
+    return;
+  }
+  const expected = currentDrawing.parts[paintProgress];
+  if (!expected) return;
+  if (partId !== expected.id) {
+    sounds.wrong();
+    drawPaintScreen(`🤔 Essa não é a parte certa! Procura <strong>${expected.label}</strong>`);
+    speak(`Essa não é a parte certa. Procura ${expected.label}!`, 'pt-PT', false);
+    setTimeout(drawPaintScreen, 2200);
+    return;
+  }
+  const hex = paintColors.find(c => c.name === selectedColor).hex;
+  el.setAttribute('fill', hex);
+  sounds.correct();
+  updateScore(2);
+  paintProgress++;
+  selectedColor = null;
+
+  if (paintProgress === currentDrawing.parts.length) {
+    sounds.win();
+    updateScore(5);
+    drawPaintScreen();
+    speak(`Boa Matilde! Acabaste ${currentDrawing.name}! Está lindíssima!`, 'pt-PT', false);
+  } else {
+    const next = currentDrawing.parts[paintProgress];
+    drawPaintScreen();
+    speak(`Muito bem! Agora escolhe a cor ${colorToSay(next.color)} para pintar ${next.label}`, 'pt-PT', false);
+  }
+}
+
+// ========== INGLÊS ==========
+const englishWords = [
+  { en: 'cat', pt: 'gato', emoji: '🐱' }, { en: 'dog', pt: 'cão', emoji: '🐶' },
+  { en: 'cow', pt: 'vaca', emoji: '🐮' }, { en: 'pig', pt: 'porco', emoji: '🐷' },
+  { en: 'horse', pt: 'cavalo', emoji: '🐴' }, { en: 'sheep', pt: 'ovelha', emoji: '🐑' },
+  { en: 'rabbit', pt: 'coelho', emoji: '🐰' }, { en: 'bear', pt: 'urso', emoji: '🐻' },
+  { en: 'lion', pt: 'leão', emoji: '🦁' }, { en: 'elephant', pt: 'elefante', emoji: '🐘' },
+  { en: 'monkey', pt: 'macaco', emoji: '🐵' }, { en: 'fish', pt: 'peixe', emoji: '🐟' },
+  { en: 'bird', pt: 'pássaro', emoji: '🐦' }, { en: 'duck', pt: 'pato', emoji: '🦆' },
+  { en: 'bee', pt: 'abelha', emoji: '🐝' }, { en: 'butterfly', pt: 'borboleta', emoji: '🦋' },
+  { en: 'apple', pt: 'maçã', emoji: '🍎' }, { en: 'banana', pt: 'banana', emoji: '🍌' },
+  { en: 'strawberry', pt: 'morango', emoji: '🍓' }, { en: 'grapes', pt: 'uvas', emoji: '🍇' },
+  { en: 'orange', pt: 'laranja', emoji: '🍊' }, { en: 'watermelon', pt: 'melancia', emoji: '🍉' },
+  { en: 'cake', pt: 'bolo', emoji: '🍰' }, { en: 'ice cream', pt: 'gelado', emoji: '🍦' },
+  { en: 'cookie', pt: 'bolacha', emoji: '🍪' }, { en: 'bread', pt: 'pão', emoji: '🍞' },
+  { en: 'cheese', pt: 'queijo', emoji: '🧀' }, { en: 'milk', pt: 'leite', emoji: '🥛' },
+  { en: 'house', pt: 'casa', emoji: '🏠' }, { en: 'car', pt: 'carro', emoji: '🚗' },
+  { en: 'bus', pt: 'autocarro', emoji: '🚌' }, { en: 'train', pt: 'comboio', emoji: '🚂' },
+  { en: 'airplane', pt: 'avião', emoji: '✈️' }, { en: 'boat', pt: 'barco', emoji: '⛵' },
+  { en: 'ball', pt: 'bola', emoji: '⚽' }, { en: 'book', pt: 'livro', emoji: '📕' },
+  { en: 'sun', pt: 'sol', emoji: '☀️' }, { en: 'moon', pt: 'lua', emoji: '🌙' },
+  { en: 'star', pt: 'estrela', emoji: '⭐' }, { en: 'flower', pt: 'flor', emoji: '🌸' },
+  { en: 'tree', pt: 'árvore', emoji: '🌳' }, { en: 'heart', pt: 'coração', emoji: '❤️' }
+];
+
+let currentEnglishWord = null;
+let englishChoices = [];
+let englishAnswered = false;
+let englishIntroDone = false;
+
+function renderEnglishGame() {
+  const shuffled = [...englishWords].sort(() => Math.random() - 0.5);
+  currentEnglishWord = shuffled[0];
+  englishChoices = shuffled.slice(0, 4).sort(() => Math.random() - 0.5);
+  englishAnswered = false;
+
+  document.getElementById('gameArea').innerHTML = `
+    <h2 class="game-title" style="color:#d32f2f">🇬🇧 Vamos aprender Inglês!</h2>
+    <p class="instruction">Ouve a palavra em inglês e toca na imagem certa!</p>
+    <div class="english-audio-area">
+      <button class="play-audio-btn" onclick="speak(currentEnglishWord.en, 'en-US', false)">
+        <span class="icon">🔊</span> Ouvir
+      </button>
+      <div class="english-word-hint" id="englishHint"></div>
+    </div>
+    <div class="english-grid">
+      ${englishChoices.map((w, i) => `
+        <div class="english-card" id="en-card-${i}" onclick="checkEnglish('${w.en}', '${w.pt}', ${i})">
+          <div class="english-emoji">${w.emoji}</div>
+          <div class="english-label">${w.pt}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="feedback" id="feedback"></div>
+  `;
+
+  // Primeiro dá instrução em português, depois diz a palavra inglesa
+  if (!englishIntroDone) {
+    englishIntroDone = true;
+    speak('Ouve a palavra em inglês e toca na imagem certa!');
+    setTimeout(() => speak(currentEnglishWord.en, 'en-US', false), 2500);
+  } else {
+    setTimeout(() => speak(currentEnglishWord.en, 'en-US', false), 400);
+  }
+}
+
+function checkEnglish(en, pt, cardIdx) {
+  if (englishAnswered) return;
+  const card = document.getElementById(`en-card-${cardIdx}`);
+  const fb = document.getElementById('feedback');
+
+  if (en === currentEnglishWord.en) {
+    englishAnswered = true;
+    card.classList.add('correct-flash');
+    sounds.win();
+    fb.innerHTML = `<span class="celebrate">🎉 Boa! "${currentEnglishWord.en}" é ${currentEnglishWord.pt}! 🌟</span>`;
+    updateScore(4);
+    // Diz "boa" em PT, depois a palavra em EN, depois a tradução
+    speak('Boa Matilde!', 'pt-PT', false);
+    setTimeout(() => speak(currentEnglishWord.en, 'en-US', false), 900);
+    setTimeout(() => speak(`em português é ${currentEnglishWord.pt}`, 'pt-PT', false), 1900);
+    setTimeout(renderEnglishGame, 3800);
+  } else {
+    card.classList.add('wrong-flash');
+    sounds.wrong();
+    speak('Tenta outra vez! Ouve com atenção.', 'pt-PT', false);
+    setTimeout(() => {
+      card.classList.remove('wrong-flash');
+      speak(currentEnglishWord.en, 'en-US', false);
+    }, 1800);
+  }
+}
+</script>
+</body>
+</html>
